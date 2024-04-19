@@ -14,7 +14,7 @@ def rotate_logs(log_path, max_size=50 * 1024 * 1024, backup_count=5):
                 shutil.move(prev_backup, new_backup)
 
 # Пример использования
-log_path = '/home/maek_zakup/logs/gunicorn_access.log'
+log_path = '/home/maek_sklad/logs/gunicorn_access.log'
 rotate_logs(log_path)
-log_path = '/home/maek_zakup/logs/gunicorn_error.log'
+log_path = '/home/maek_sklad/logs/gunicorn_error.log'
 rotate_logs(log_path)
