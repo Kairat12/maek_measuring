@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3f51b5">
+    <title>{% block title %}Профиль{% endblock title %}</title>
+    <meta name="description" content="MAЭК">
+    <link href="{% static 'journal/img/favicon.ico' %}" rel="shortcut icon" type="image/vnd.microsoft.icon"/>
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'journal/vendor/bootstrap/css3/bootstrap.min.css' %}?v=1.2" rel="stylesheet">
+
+
+    <!-- Custom fonts for this template -->
+    {#    <!--    <link href="{% static 'journal/vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">-->#}
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'journal/css/outwork_style.css' %}?v=1.11" rel="stylesheet" type="text/css">
+{#    <link rel="manifest" href="{% url 'manifest' %}?v=1.4">#}
+    <link rel="manifest" href="/static/manifest.json?v=1.4">
+    <script>
+        window.addEventListener('load', function () {
+            const version = '6';
+            const serviceWorkerUrl = '/static/journal/service-worker.js'; // Абсолютный путь к сервисному работнику
+            navigator.serviceWorker.register(serviceWorkerUrl + '?v=' + version);
+        });
+    </script>
+    {% block extra_css %}{% endblock extra_css %}
+</head>
+
+<body>
+<div id="wrapper">
+    {#    <div class="position-absolute w-100 h-100 align-items-center justify-content-center" id="installBlock" style="background: rgba(0, 0, 0, 0.7);z-index: 1000">#}
+    {#        <button class="btn btn-primary" id="installButton" style="display: none;">Установить приложение</button>#}
+    {#        <button class="btn btn-primary" id="cancelInstallbtn" style="display: none;">Отменить</button>#}
+    {#    </div>#}
+    {% include 'layouts/nav.html' %}
+
+    <div id="body">
+        {% block content %}{% endblock content %}
+    </div> <!--body-->
+
+    <!-- Footer -->
+    <div id="footer">
+        <footer class="footer" style="background: #45485b; color: #c1c1c5">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-6 col-md-6 col-xs-12 h-100 text-left">
+                        {# <img src="{% static '/journal/img/logo_footer.png' %}"/>#}
+                        <h2 class="h6"><b>Контакты</b></h2>
+                        <p>Мангистауская область, г. Актау, Промзона 7, здание 65</p>
+                        <p>Элекстронный адрес: <a href="mailto:maek@maek.kz">maek@maek.kz</a></p>
+                        <!--                        <p>Телефон доверия ТОО «МАЭК» по вопросам закупок: <a href="tel:+77292562100">+7(7292)-->
+                        <!--                            562-100</a></p>-->
+
+                        <p class="mt-5">
+                            © 2024 ТОО «Мангистауский атомный энергетический комбинат»
+                        </p>
+                    </div>
+                    <div class="col-lg-5 col-md-6 col-xs-12">
+                        <!--                        <h6 class="h6">Ответственные лица по закупкам</h6>-->
+                        <!--                        <p>Камбаров А.А. - Начальник отдела проведения конкурсных процедур и планирования Департамента-->
+                        <!--                            по организации закупок, телефон: <a href="tel:+77292564813">+7(7292) 564813 </a>, -->
+                        <!--                            е-mail: <a href="mailto:akambarov@maek.kz">akambarov@maek.kz</a>-->
+                        <!--                        </p>-->
+                        <!--                        <p>Кадацкая А.А. - Начальник отдела проведения закупа способом из одного источника и ценовых-->
+                        <!--                            предложений Департамента по организации закупок, телефон: <a href="tel:+77292564227">+7(7292) 564227</a>, е-mail:-->
+                        <!--                            е-mail: <a href="mailto:akadatskaya@maek.kz">akadatskaya@maek.kz</a>-->
+                        <!--                        </p>-->
+                        <!--{#                        <p>#}-->
+                        <!--{#                            Курманбаев Б.Н. - Начальник отдела материально-технического обеспечения Департамента#}-->
+                        <!--{#                            материально-технического обеспечения, телефон:<a href="tel:+77292564942">+7 (7292) 564942</a>, е-mail: #}-->
+                        <!--{#                            <a href="mailto:bkurmanbaev@maek.kz">#}-->
+                        <!--{#                            bkurmanbaev@maek.kz#}-->
+                        <!--{#                            </a>#}-->
+                        <!--{#                        </p>#}-->
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div> <!--footer-->
+</div> <!--wrapper-->
+
+<!-- Bootstrap core JavaScript -->
+
+{% block extra_js %}
+    <script src="{% static 'journal/vendor/bootstrap/js3/bootstrap.min.js' %}?v=1.1"></script>
+    <script src="{% static 'journal/vendor/bootstrap/js3/bootstrap.bundle.min.js' %}?v=1.1"></script>
+    <script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
+    <script>
+        $("#navBurger").on("click", function () {
+            $("#navbarNav").slideToggle("slow", function () {
+            });
+        });
+
+    </script>
+{% endblock extra_js %}
+
+</body>
+</html>

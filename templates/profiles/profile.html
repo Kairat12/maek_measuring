@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Профиль{% endblock %}
+
+{% block content %}
+    <div class="container">
+    <div class="row justify-content-center pt-5 pb-5">
+        <div class="col-md-4 ">
+            <h1 class="h1 mb-6 text-center">Профиль</h1>
+            <p class="h6 pt-4">ФИО: {{ user_info.profile.get_full_name }}</p>
+            <p class="h6 pt-4">Табельный номер: {{ user_info.profile.timesheet_number }}</p>
+            <p class="h6 pt-4">Департамент/Подразделение: {{ user_info.profile.department }}</p>
+            <p class="h6 pt-4">Должность: {{ user_info.profile.position }}</p>
+            <p class="h6 pt-4">Почта: {{ user_info.profile.mail }}</p>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}

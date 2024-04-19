@@ -1,0 +1,42 @@
+{% load static %}
+{% load i18n %}
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg bg-body-light out-nav navbar-static-top">
+    <div class="container">
+        <a class="navbar-brand" href="/"><img src="{% static '/journal/img/logo.png' %}" alt="Logo"></a>
+        <button id="navBurger" class="navbar-toggler border-0" aria-label="Button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="{{ home_page }} nav-item">
+                    <a class="nav-link" href="{% url 'profiles:index' %}">Главная</a>
+                </li>
+<!--                {% if request.user.profile or request.user.is_superuser %}-->
+<!--                    <li class="{{ home_page }} nav-item">-->
+<!--                        <a class="nav-link" href="https://power.maek.kz/" target="_blank">Мониторинг Мощности</a>-->
+<!--                    </li>-->
+<!--                {% endif %}-->
+            </ul>
+            <ul class="navbar-nav me-4">
+                {% if request.user.is_authenticated %}
+                    <li>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
+                                Профиль
+                            </a>
+                            <ul class="dropdown-menu text-left">
+                                <li><a class="dropdown-item" href="{% url 'profiles:profiles' %}">Мой профиль</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><a href="{% url 'profiles:logout' %}">Выйти</a></li>
+                {% elif request.user.is_anonymous %}
+                    <li><a href="{% url 'profiles:login' %}">Вход</a></li>
+                {% endif %}
+            </ul>
+
+        </div>
+    </div>
+</nav>
