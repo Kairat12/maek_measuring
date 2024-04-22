@@ -23,4 +23,5 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path('', include('profiles.urls', namespace='profiles')),
+    path('', include('sklad.urls', namespace='sklad')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

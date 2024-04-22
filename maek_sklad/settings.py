@@ -31,8 +31,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 LOGIN_URL = 'profiles:login'
-LOGIN_REDIRECT_URL = 'profiles:profiles'
-LOGOUT_REDIRECT_URL = 'profiles:profiles'
+LOGIN_REDIRECT_URL = 'sklad:index'
+LOGOUT_REDIRECT_URL = 'sklad:index'
 
 AUTH_USER_MODEL = 'auth.User'
 
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'profiles',
+    'sklad',
     'widget_tweaks',
     'crispy_forms',
 ]

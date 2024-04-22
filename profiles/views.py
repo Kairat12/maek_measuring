@@ -11,6 +11,3 @@ def profile_info(request):
     }
     return render(request, 'profiles/profile.html', context)
 
-@login_required()
-def index(request):
-    return render(request, 'index.html')
