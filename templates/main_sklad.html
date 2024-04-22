@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="contractor_content mb-5">
+        <div class="container">
+            <table class="table-bordered" id="productsTable">
+                        <thead>
+                        <tr>
+                            <th>Номенклатурный номер</th>
+                            <th>Наименование</th>
+                            <th>Единица измерения</th>
+                            <th>Количество</th>
+                            <th>Цена
+</th>
+                            <th>Сумма</th>
+                            <th>Дата поступления</th>
+                            <th> № склада</th>
+                            <th>Ответственный</th>
+                            <th>Контрагент</th>
+                            <th>Договор</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for main_sklad in main_sklads %}
+                            <tr>
+                                <td class="td_item_number">
+                                    {{ main_sklad.item_number }}
+                                </td>
+                                <td class="td_name">{{ main_sklad.name }}</td>
+                                <td class="td_unit">{{ main_sklad.unit }}</td>
+                                <td class="td_quantity">{{ main_sklad.quantity }}</td>
+                                <td class="td_price">{{ main_sklad.price }}</td>
+                                <td class="td_date_receipt">{{ main_sklad.sum }}</td>
+                                <td class="td_sum">{{ main_sklad.date_receipt }}</td>
+                                <td class="td_number_sklad">{{ main_sklad.number_sklad }}</td>
+                                <td class="td_responsible">{{ main_sklad.responsible }}</td>
+                                <td class="td_contractor">{{ main_sklad.contractor }}</td>
+                                <td class="td_agreement">{{ main_sklad.agreement }}</td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+        </div>
+    </div>
+{% endblock %}

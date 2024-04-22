@@ -6,4 +6,5 @@ app_name = 'sklad'
 
 urlpatterns = [
     path('', index, name='index'),
+    path('main_sklad/', main_sklad, name='main_sklad'),
 ]
