@@ -121,7 +121,7 @@
 
     <script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
     <script>
-        $(".search_input").on("change", function () {
+        $(".search_input").on("input", function () {
             $("#loader").fadeIn("slow");
             var table = $("#productsTable");
             var rows = table.find("tbody tr");
