@@ -15,4 +15,4 @@ class MainSklad(models.Model):
     agreement = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return f'{self.item_number}-{self.name}'

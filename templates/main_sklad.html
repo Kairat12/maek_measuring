@@ -28,14 +28,14 @@
                                 </td>
                                 <td class="td_name">{{ main_sklad.name }}</td>
                                 <td class="td_unit">{{ main_sklad.unit }}</td>
-                                <td class="td_quantity">{{ main_sklad.quantity }}</td>
-                                <td class="td_price">{{ main_sklad.price }}</td>
-                                <td class="td_date_receipt">{{ main_sklad.sum }}</td>
+                                <td class="td_quantity">{{ main_sklad.quantity|default_if_none:"" }}</td>
+                                <td class="td_price">{{ main_sklad.price|default_if_none:"" }}</td>
+                                <td class="td_date_receipt">{{ main_sklad.sum|default_if_none:"" }}</td>
                                 <td class="td_sum">{{ main_sklad.date_receipt }}</td>
                                 <td class="td_number_sklad">{{ main_sklad.number_sklad }}</td>
                                 <td class="td_responsible">{{ main_sklad.responsible }}</td>
-                                <td class="td_contractor">{{ main_sklad.contractor }}</td>
-                                <td class="td_agreement">{{ main_sklad.agreement }}</td>
+                                <td class="td_contractor">{{ main_sklad.contractor|default_if_none:"" }}</td>
+                                <td class="td_agreement">{{ main_sklad.agreement|default_if_none:"" }}</td>
 
                             </tr>
                         {% endfor %}

@@ -20,39 +20,41 @@ class Command(BaseCommand):
         try:
             workbook = load_workbook(file_path)
             sheet = workbook.active
-
+            data_count = 0
             for index, row in enumerate(sheet.iter_rows(values_only=True)):
                 if index < 4:
                     continue
-
+                data_count = data_count + 1
                 sklad, created = MainSklad.objects.get_or_create(
-                    item_number=row[0],
-                    name=row[1],
-                    defaults={'unit': row[2],
-                              'quantity': row[3],
-                              'price': row[4],
-                              'sum': row[5],
-                              'date_receipt': datetime.strptime(row[6], '%d.%m.%y').strftime('%Y-%m-%d'),
-                              'number_sklad': row[7],
-                              'responsible': row[8],
-                              'contractor': row[9],
-                              'agreement': row[10],
+                    item_number=row[0] if row[0] else '',
+                    name=row[1] if row[1] else '',
+                    quantity=row[3] if row[3] else 0,
+                    price=row[4] if row[4] else 0,
+                    sum=row[5] if row[4] else 0,
+                    number_sklad=row[7] if row[7] else '',
+                    defaults={'unit': row[2] if row[2] else '',
+                              'date_receipt': datetime.strptime(str(row[6]), '%d.%m.%y').strftime('%Y-%m-%d')
+                              if row[6] else datetime.strptime('1970-01-01', '%Y-%m-%d').strftime('%Y-%m-%d'),
+                              'responsible': row[8] if row[8] else '',
+                              'contractor': row[9] if row[9] else '',
+                              'agreement': row[10] if row[10] else '',
                               }
                 )
                 if created:
                     self.stdout.write(f"Создана запись: {sklad}")
                 else:
-                    sklad.item_number = row[0]
-                    sklad.name = row[1]
-                    sklad.unit = row[2]
-                    sklad.quantity = row[3]
-                    sklad.price = row[4]
-                    sklad.sum = row[5]
-                    sklad.date_receipt = datetime.strptime(row[6], '%d.%m.%y').strftime('%Y-%m-%d') if row[6] != '' else datetime.strptime('1970-01-01', '%d.%m.%y').strftime('%Y-%m-%d')
-                    sklad.number_sklad = row[7]
-                    sklad.responsible = row[8]
-                    sklad.contractor = row[9] if row[6] != '' else ''
-                    sklad.agreement = row[10] if row[6] != '' else ''
+                    sklad.item_number = row[0] if row[0] else ''
+                    sklad.name = row[1] if row[1] else ''
+                    sklad.unit = row[2] if row[2] else ''
+                    sklad.quantity = row[3] if row[3] else 0
+                    sklad.price = row[4] if row[4] else 0
+                    sklad.sum = row[5] if row[5] else 0
+                    print(f'{row[6]} - {data_count}')
+                    sklad.date_receipt = datetime.strptime(str(row[6]), '%d.%m.%y').strftime('%Y-%m-%d') if row[6] is not None else datetime.strptime('1970-01-01', '%Y-%m-%d').strftime('%Y-%m-%d')
+                    sklad.number_sklad = row[7] if row[7] else ''
+                    sklad.responsible = row[8] if row[8] else ''
+                    sklad.contractor = row[9] if row[6] else ''
+                    sklad.agreement = row[10] if row[6] else ''
                     sklad.save()
                     self.stdout.write(f"Обновлена запись: {sklad}")
 
