@@ -146,7 +146,7 @@
 
                         // Если элемент соответствует цене или сумме
                         if (targetClass === ".td_price") {
-                            var cellNumericValue = Number(cellValue.replace(',', '.'));
+                            var cellNumericValue = Number(cellValue.replace(/\s/g, '').replace(',', '.'));
                             console.log("minPrice", minPrice);
                             console.log("maxPrice", maxPrice);
 
