@@ -10,5 +10,5 @@ def index(request):
     return render(request, 'index.html')
 
 def main_sklad(request):
-    main_sklads = MainSklad.objects.all()
+    main_sklads = MainSklad.objects.all().order_by('id')
     return render(request, 'main_sklad.html', {'main_sklads': main_sklads})

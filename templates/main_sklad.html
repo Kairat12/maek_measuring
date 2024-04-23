@@ -1,46 +1,185 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% load static %}
 {% block content %}
+
     <div class="contractor_content mb-5">
         <div class="container">
+            <div class="mb-4 search_table">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="p-2">
+                            <label>Поиск по номенклатуре</label>
+                            <div class="mt-2">
+                                <input type="text" id="search_item_number" class="blue_input w-100 search_input"
+                                       placeholder="Поиск по номенклатуре" data-target=".td_item_number">
+                            </div>
+                        </td>
+                        <td class="p-2">
+                            <label>Поиск по наименованию</label>
+                            <div class="mt-2">
+                                <input type="text" id="search_name" class="blue_input w-100 search_input"
+                                       placeholder="Поиск по наименованию" data-target=".td_name"
+                                >
+                            </div>
+                        </td>
+                        <td class="p-2">
+                            <label>Поиск по цене (интервал)</label>
+                            <div class="mt-2">
+                                <input type="text" id="search_price_min" class="blue_input w-100 search_input"
+                                       data-target=".td_price" placeholder="От">
+                            </div>
+                            <div class="mt-2">
+                                <input type="text" id="search_price_max" class="blue_input w-100 search_input"
+                                       data-target=".td_price" placeholder="До">
+                            </div>
+                        </td>
+                        <td class="p-2">
+                            <label>Поиск по сумме (интервал)</label>
+                            <div class="mt-2">
+                                <input type="number" id="search_sum_min" class="blue_input w-100 search_input"
+                                       data-target=".td_sum" placeholder="От">
+                            </div>
+                            <div class="mt-2">
+                                <input type="number" id="search_sum_max" class="blue_input w-100 search_input"
+                                       data-target=".td_sum" placeholder="До">
+                            </div>
+                        </td>
+                        <td class="p-2">
+                            <label>Поиск по дате поступления (интервал)</label>
+                            <div class="mt-2">
+                                <input type="text" id="search_date_receipt"
+                                       class="blue_input w-100 search_input"
+                                       placeholder="Поиск по дате поступления (интервал) "
+                                       data-target=".td_date_receipt"
+                                >
+                            </div>
+                        </td>
+                        <td class="p-2">
+                            <label>Поиск по складу</label>
+                            <div class="mt-2">
+                                <input type="number" id="search_number_sklad"
+                                       class="blue_input w-100 search_input"
+                                       placeholder="Поиск по складу"
+                                       data-target=".td_number_sklad"
+                                >
+                            </div>
+                        </td>
+                        </td>
+                        <td class="p-2">
+                            <label>Поиск по подразделению </label>
+                            <div class="mt-2">
+                                <input type="number" id="search_contractor"
+                                       class="blue_input w-100 search_input"
+                                       placeholder="Поиск по подразделению "
+                                       data-target=".td_contractor"
+                                >
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
             <table class="table-bordered" id="productsTable">
-                        <thead>
-                        <tr>
-                            <th>Номенклатурный номер</th>
-                            <th>Наименование</th>
-                            <th>Единица измерения</th>
-                            <th>Количество</th>
-                            <th>Цена
-</th>
-                            <th>Сумма</th>
-                            <th>Дата поступления</th>
-                            <th> № склада</th>
-                            <th>Ответственный</th>
-                            <th>Контрагент</th>
-                            <th>Договор</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for main_sklad in main_sklads %}
-                            <tr>
-                                <td class="td_item_number">
-                                    {{ main_sklad.item_number }}
-                                </td>
-                                <td class="td_name">{{ main_sklad.name }}</td>
-                                <td class="td_unit">{{ main_sklad.unit }}</td>
-                                <td class="td_quantity">{{ main_sklad.quantity|default_if_none:"" }}</td>
-                                <td class="td_price">{{ main_sklad.price|default_if_none:"" }}</td>
-                                <td class="td_date_receipt">{{ main_sklad.sum|default_if_none:"" }}</td>
-                                <td class="td_sum">{{ main_sklad.date_receipt }}</td>
-                                <td class="td_number_sklad">{{ main_sklad.number_sklad }}</td>
-                                <td class="td_responsible">{{ main_sklad.responsible }}</td>
-                                <td class="td_contractor">{{ main_sklad.contractor|default_if_none:"" }}</td>
-                                <td class="td_agreement">{{ main_sklad.agreement|default_if_none:"" }}</td>
+                <thead>
+                <tr>
+                    <th>Номенклатурный номер</th>
+                    <th>Наименование</th>
+                    <th>Единица измерения</th>
+                    <th>Количество</th>
+                    <th>Цена</th>
+                    <th>Сумма</th>
+                    <th>Дата поступления</th>
+                    <th> № склада</th>
+                    <th>Ответственный</th>
+                    <th>Контрагент</th>
+                    <th>Договор</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for main_sklad in main_sklads %}
+                    <tr>
+                        <td class="td_item_number">{{ main_sklad.item_number }}</td>
+                        <td class="td_name" style="max-width: 200px">{{ main_sklad.name }}</td>
+                        <td class="td_unit">{{ main_sklad.unit }}</td>
+                        <td class="td_quantity">{{ main_sklad.quantity|default_if_none:""|intcomma }}</td>
+                        <td class="td_price">{{ main_sklad.price|default_if_none:""|intcomma }}</td>
+                        <td class="td_sum">{{ main_sklad.sum|default_if_none:""|intcomma }}</td>
+                        <td class="td_date_receipt">{{ main_sklad.date_receipt|date:"d.m.Y" }}</td>
+                        <td class="td_number_sklad">{{ main_sklad.number_sklad }}</td>
+                        <td class="td_responsible">{{ main_sklad.responsible }}</td>
+                        <td class="td_contractor">{{ main_sklad.contractor|default_if_none:"" }}</td>
+                        <td class="td_agreement">{{ main_sklad.agreement|default_if_none:"" }}</td>
 
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
+
+    <script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
+    <script>
+        $(".search_input").on("change", function () {
+            $("#loader").fadeIn("slow");
+            var table = $("#productsTable");
+            var rows = table.find("tbody tr");
+            var minPrice = parseFloat($("#search_price_min").val());
+            var maxPrice = parseFloat($("#search_price_max").val());
+            var minSum = parseFloat($("#search_sum_min").val());
+            var maxSum = parseFloat($("#search_sum_max").val());
+            // Показываем прелоадер
+
+            rows.each(function () {
+                var row = $(this);
+                var showRow = true;
+
+                // Проверяем каждый элемент поиска
+                $(".search_input").each(function () {
+                    var inputValue = $(this).val().toUpperCase();
+                    var targetClass = $(this).data("target");
+                    var cellValue = row.find(targetClass).text().toUpperCase();
+
+                    // Если есть значение поиска
+                    if (inputValue) {
+
+                        // Если элемент соответствует цене или сумме
+                        if (targetClass === ".td_price") {
+                            var cellNumericValue = Number(cellValue.replace(',', '.'));
+                            console.log("minPrice", minPrice);
+                            console.log("maxPrice", maxPrice);
+
+                            // Проверяем соответствие интервалу, учитывая возможность пустых значений
+                            if ((!isNaN(minPrice) && cellNumericValue>1 && cellNumericValue < minPrice) ||
+                                (!isNaN(maxPrice) && cellNumericValue>1 && cellNumericValue > maxPrice) ||
+                                (!isNaN(minSum) && cellNumericValue>1 && cellNumericValue < minSum) ||
+                                (!isNaN(maxSum) && cellNumericValue>1 && cellNumericValue > maxSum)) {
+                                console.log("cellNumericValue", cellNumericValue);
+                                showRow = false;
+                                return false; // Выходим из цикла each
+                            }
+                        } else {
+                            // Проверяем соответствие значения поиска
+                            if (cellValue.indexOf(inputValue) === -1) {
+                                showRow = false;
+                                return false; // Выходим из цикла each
+                            }
+                        }
+                    }
+                });
+
+                // Отображаем или скрываем строку
+                if (showRow) {
+                    row.show();
+                } else {
+                    row.hide();
+                }
+            });
+
+            // Скрываем прелоадер после завершения поиска
+            $("#loader").fadeOut("slow");
+        });
+    </script>
+
 {% endblock %}
