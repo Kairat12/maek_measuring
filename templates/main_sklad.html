@@ -151,10 +151,10 @@
                             console.log("maxPrice", maxPrice);
 
                             // Проверяем соответствие интервалу, учитывая возможность пустых значений
-                            if ((!isNaN(minPrice) && cellNumericValue>1 && cellNumericValue < minPrice) ||
-                                (!isNaN(maxPrice) && cellNumericValue>1 && cellNumericValue > maxPrice) ||
-                                (!isNaN(minSum) && cellNumericValue>1 && cellNumericValue < minSum) ||
-                                (!isNaN(maxSum) && cellNumericValue>1 && cellNumericValue > maxSum)) {
+                            if ((!isNaN(minPrice) && !isNaN(cellNumericValue) && cellNumericValue>0 && cellNumericValue < minPrice) ||
+                                (!isNaN(maxPrice) && !isNaN(cellNumericValue) && cellNumericValue>0 && cellNumericValue > maxPrice) ||
+                                (!isNaN(minSum) && !isNaN(cellNumericValue) && cellNumericValue>0 && cellNumericValue < minSum) ||
+                                (!isNaN(maxSum) && !isNaN(cellNumericValue) && cellNumericValue>0 && cellNumericValue > maxSum)) {
                                 console.log("cellNumericValue", cellNumericValue);
                                 showRow = false;
                                 return false; // Выходим из цикла each
