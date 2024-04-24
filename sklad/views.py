@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
+from django.db.models import Sum
 from django.shortcuts import render
 
 from sklad.models import MainSklad
@@ -34,6 +35,9 @@ def main_sklad(request):
             else:
                 main_sklads = main_sklads.filter(**{field: value})
 
+    main_sklads_count = len(main_sklads)
+    main_sklads_sum = main_sklads.aggregate(sum=Sum('sum'))
+
     items_per_page = 60
 
     paginator = Paginator(main_sklads, items_per_page)
@@ -47,4 +51,9 @@ def main_sklad(request):
     except EmptyPage:
         main_sklads = paginator.page(paginator.num_pages)
 
-    return render(request, 'main_sklad.html', {'main_sklads': main_sklads})
+
+
+    return render(request, 'main_sklad.html', {'main_sklads': main_sklads,
+                                               'main_sklads_count': main_sklads_count,
+                                               'main_sklads_sum': main_sklads_sum,
+                                               })

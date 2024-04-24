@@ -74,14 +74,16 @@
                                value="{{ request.GET.contractor }}">
                     </div>
                     <div class="w-100 mt-2">
-                        <button type="submit" class="btn btn-primary">Поиск</button>
+                        <button type="submit" class="btn btn-primary me-3">Поиск</button>
+                        <button id="form-clear-btn" class="btn btn-primary "><a href="{% url 'sklad:main_sklad' %}" class="text-white">Сбросить</a></button>
                     </div>
                 </div>
             </form>
 
             {% if main_sklads %}
-                <div class="h3">
-                    <p>Количество записей {{ main_sklads.count }} </p>
+                <div class="h5">
+                    <p>Количество записей: <b>{{ main_sklads_count }}</b> </p>
+                    <p>Общая сумма: <b>{{ main_sklads_sum.sum|intcomma }}</b> </p>
                 </div>
                 <table class="table-bordered" id="productsTable">
                     <thead>
