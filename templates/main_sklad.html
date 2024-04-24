@@ -10,22 +10,22 @@
                 <div class="row mb-3 pt-4 pb-4 bg-dark-subtle row-gap-3 ms-0 me-0">
                     <div class="col-3">
                         <label>Поиск по номенклатуре</label>
-                        <input type="text" name="item_number" class="form-control" placeholder="Поиск по номенклатуре"
+                        <input type="text" name="item_number__icontains" class="form-control" placeholder="Поиск по номенклатуре"
                                value="{{ request.GET.item_number }}">
                     </div>
                     <div class="col-3">
                         <label>Поиск по наименованию</label>
-                        <input type="text" name="name" class="form-control" placeholder="Поиск по наименованию"
+                        <input type="text" name="name__icontains" class="form-control" placeholder="Поиск по наименованию"
                                value="{{ request.GET.name }}">
                     </div>
                     <div class="col-3">
                         <label>Поиск по складу</label>
-                        <input type="text" name="number_sklad" class="form-control" placeholder="Поиск по складу"
+                        <input type="text" name="number_sklad__icontains" class="form-control" placeholder="Поиск по складу"
                                value="{{ request.GET.number_sklad }}">
                     </div>
                     <div class="col-3">
                         <label>Поиск по подразделению</label>
-                        <input type="text" name="responsible" class="form-control" placeholder="Поиск по подразделению"
+                        <input type="text" name="responsible__icontains" class="form-control" placeholder="Поиск по подразделению"
                                value="{{ request.GET.responsible }}">
                     </div>
                     <div class="col-3">
@@ -70,7 +70,7 @@
                     </div>
                     <div class="col-3">
                         <label>Поиск по контрагентам</label>
-                        <input type="text" name="contractor" class="form-control" placeholder="Поиск по контрагентам"
+                        <input type="text" name="contractor__icontains" class="form-control" placeholder="Поиск по контрагентам"
                                value="{{ request.GET.contractor }}">
                     </div>
                     <div class="w-100 mt-2">
@@ -129,10 +129,10 @@
                 <ul class="pagination mt-4">
                     <li class="step-links">
                         {% if main_sklads.has_previous %}
-                            <li class="page-item"><a class="page-link" href="?page=1" aria-label="Previous"><span
+                            <li class="page-item"><a class="page-link" href="?page=1{% if search_querydict %}&{{ search_querydict }}{% endif %}" aria-label="Previous"><span
                                     aria-hidden="true">&laquo;</span></a></li>
                             <li class="page-item"><a class="page-link"
-                                                     href="?page={{ main_sklads.previous_page_number }}">&#8249;</a>
+                                                     href="?page={{ main_sklads.previous_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8249;</a>
                             </li>
                         {% endif %}
                     </li>
@@ -140,16 +140,16 @@
                     {% for page_num in main_sklads.paginator.page_range %}
                         {% if page_num >= main_sklads.number|add:"-2" and page_num <= main_sklads.number|add:"2" %}
                             <li class="page-item {% if page_num == main_sklads.number %}active{% endif %}">
-                                <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                                <a class="page-link" href="?page={{ page_num }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">{{ page_num }}</a>
                             </li>
                         {% endif %}
                     {% endfor %}
 
                     {% if main_sklads.has_next %}
-                        <li class="page-item"><a class="page-link" href="?page={{ main_sklads.next_page_number }}">&#8250;</a>
+                        <li class="page-item"><a class="page-link" href="?page={{ main_sklads.next_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8250;</a>
                         </li>
                         <li class="page-item"><a class="page-link"
-                                                 href="?page={{ main_sklads.paginator.num_pages }}"><span
+                                                 href="?page={{ main_sklads.paginator.num_pages }}{% if search_querydict %}&{{ search_querydict }}{% endif %}"><span
                                 aria-hidden="true">&raquo;</span>
                         </a></li>
                     {% endif %}
