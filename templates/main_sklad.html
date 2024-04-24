@@ -5,82 +5,81 @@
 
     <div class="contractor_content mb-5">
         <div class="container">
-            <div class="mb-4 search_table">
-                <table>
-                    <tbody>
-                    <tr>
-                        <td class="p-2">
-                            <label>Поиск по номенклатуре</label>
-                            <div class="mt-2">
-                                <input type="text" id="search_item_number" class="blue_input w-100 search_input"
-                                       placeholder="Поиск по номенклатуре" data-target=".td_item_number">
+            <form method="GET" action="{% url 'sklad:main_sklad' %}"
+                  class="w-100">
+                <div class="row mb-3 pt-4 pb-4 bg-dark-subtle row-gap-3 ms-0 me-0">
+                    <div class="col-3">
+                        <label>Поиск по номенклатуре</label>
+                        <input type="text" name="item_number" class="form-control" placeholder="Поиск по номенклатуре"
+                               value="{{ request.GET.item_number }}">
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по наименованию</label>
+                        <input type="text" name="name" class="form-control" placeholder="Поиск по наименованию"
+                               value="{{ request.GET.name }}">
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по номеру складу</label>
+                        <input type="text" name="number_sklad" class="form-control" placeholder="Поиск по номеру складу"
+                               value="{{ request.GET.number_sklad }}">
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по подразделению</label>
+                        <input type="text" name="responsible" class="form-control" placeholder="Поиск по подразделению"
+                               value="{{ request.GET.responsible }}">
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по цене</label>
+                        <div class="row">
+                            <div class="col">
+                                <input type="number" name="price__gte" class="form-control" placeholder="От"
+                                       value="{{ request.GET.price__gte }}">
                             </div>
-                        </td>
-                        <td class="p-2">
-                            <label>Поиск по наименованию</label>
-                            <div class="mt-2">
-                                <input type="text" id="search_name" class="blue_input w-100 search_input"
-                                       placeholder="Поиск по наименованию" data-target=".td_name"
-                                >
+                            <div class="col">
+                                <input type="number" name="price__lte" class="form-control" placeholder="До"
+                                       value="{{ request.GET.price__lte }}">
                             </div>
-                        </td>
-                        <td class="p-2">
-                            <label>Поиск по цене </label>
-                            <div class="mt-2">
-                                <input type="text" id="search_price_min" class="blue_input w-100 search_input"
-                                       data-target=".td_price" placeholder="От">
+                        </div>
+                    </div>
+
+                    <div class="col-3">
+                        <label>Поиск по сумме</label>
+                        <div class="row">
+                            <div class="col">
+                                <input type="number" name="sum__gte" class="form-control" placeholder="От"
+                                       value="{{ request.GET.sum__gte }}">
                             </div>
-                            <div class="mt-2">
-                                <input type="text" id="search_price_max" class="blue_input w-100 search_input"
-                                       data-target=".td_price" placeholder="До">
+                            <div class="col">
+                                <input type="number" name="sum__lte" class="form-control" placeholder="До"
+                                       value="{{ request.GET.sum__lte }}">
                             </div>
-                        </td>
-                        <td class="p-2">
-                            <label>Поиск по сумме </label>
-                            <div class="mt-2">
-                                <input type="number" id="search_sum_min" class="blue_input w-100 search_input"
-                                       data-target=".td_sum" placeholder="От">
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по дате поступления</label>
+                        <div class="row">
+                            <div class="col">
+                                <input type="date" name="date_receipt__gte" class="form-control" placeholder="От"
+                                       value="{{ request.GET.date_receipt__gte }}">
                             </div>
-                            <div class="mt-2">
-                                <input type="number" id="search_sum_max" class="blue_input w-100 search_input"
-                                       data-target=".td_sum" placeholder="До">
+                            <div class="col">
+                                <input type="date" name="date_receipt__lte" class="form-control" placeholder="До"
+                                       value="{{ request.GET.date_receipt__lte }}">
                             </div>
-                        </td>
-                        <td class="p-2">
-                            <label>Поиск по дате поступления </label>
-                            <div class="mt-2">
-                                <input type="text" id="search_date_receipt"
-                                       class="blue_input w-100 search_input"
-                                       placeholder="Поиск по дате поступления "
-                                       data-target=".td_date_receipt"
-                                >
-                            </div>
-                        </td>
-                        <td class="p-2">
-                            <label>Поиск по складу</label>
-                            <div class="mt-2">
-                                <input type="number" id="search_number_sklad"
-                                       class="blue_input w-100 search_input"
-                                       placeholder="Поиск по складу"
-                                       data-target=".td_number_sklad"
-                                >
-                            </div>
-                        </td>
-                        </td>
-                        <td class="p-2">
-                            <label>Поиск по подразделению </label>
-                            <div class="mt-2">
-                                <input type="text" id="search_contractor"
-                                       class="blue_input w-100 search_input"
-                                       placeholder="Поиск по подразделению "
-                                       data-target=".td_contractor"
-                                >
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по контрагентам</label>
+                        <input type="text" name="contractor" class="form-control" placeholder="Поиск по контрагентам"
+                               value="{{ request.GET.contractor }}">
+                    </div>
+                    <div class="w-100 mt-2">
+                        <button type="submit" class="btn btn-primary">Поиск</button>
+                    </div>
+                </div>
+            </form>
+
+            {% if main_sklads %}
             <table class="table-bordered" id="productsTable">
                 <thead>
                 <tr>
@@ -116,70 +115,53 @@
                 {% endfor %}
                 </tbody>
             </table>
+                {% else %}
+            <div>
+                <h3 class="h3">Ничего не найдено</h3>
+            </div>
+            {% endif %}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination mt-4">
+                    <li class="step-links">
+                        {% if main_sklads.has_previous %}
+                            <li class="page-item"><a class="page-link" href="?page=1" aria-label="Previous"><span
+                                    aria-hidden="true">&laquo;</span></a></li>
+                            <li class="page-item"><a class="page-link"
+                                                     href="?page={{ main_sklads.previous_page_number }}">&#8249;</a>
+                            </li>
+                        {% endif %}
+                    </li>
+
+                    {% for page_num in main_sklads.paginator.page_range %}
+                        {% if page_num >= main_sklads.number|add:"-2" and page_num <= main_sklads.number|add:"2" %}
+                            <li class="page-item {% if page_num == main_sklads.number %}active{% endif %}">
+                                <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if main_sklads.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ main_sklads.next_page_number }}">&#8250;</a>
+                        </li>
+                        <li class="page-item"><a class="page-link"
+                                                 href="?page={{ main_sklads.paginator.num_pages }}"><span
+                                aria-hidden="true">&raquo;</span>
+                        </a></li>
+                    {% endif %}
+                </ul>
+            </nav>
         </div>
-    </div>
 
-    <script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
-    <script>
-        $(".search_input").on("input", function () {
-            $("#loader").fadeIn("slow");
-            var table = $("#productsTable");
-            var rows = table.find("tbody tr");
-            var minPrice = parseFloat($("#search_price_min").val());
-            var maxPrice = parseFloat($("#search_price_max").val());
-            var minSum = parseFloat($("#search_sum_min").val());
-            var maxSum = parseFloat($("#search_sum_max").val());
-            // Показываем прелоадер
-
-            rows.each(function () {
-                var row = $(this);
-                var showRow = true;
-
-                // Проверяем каждый элемент поиска
-                $(".search_input").each(function () {
-                    var inputValue = $(this).val().toUpperCase();
-                    var targetClass = $(this).data("target");
-                    var cellValue = row.find(targetClass).text().toUpperCase();
-
-                    // Если есть значение поиска
-                    if (inputValue) {
-
-                        // Если элемент соответствует цене или сумме
-                        if (targetClass === ".td_price") {
-                            var cellNumericValue = Number(cellValue.replace(/\s/g, '').replace(',', '.'));
-                            console.log("minPrice", minPrice);
-                            console.log("maxPrice", maxPrice);
-
-                            // Проверяем соответствие интервалу, учитывая возможность пустых значений
-                            if ((!isNaN(minPrice) && !isNaN(cellNumericValue) && cellNumericValue>0 && cellNumericValue < minPrice) ||
-                                (!isNaN(maxPrice) && !isNaN(cellNumericValue) && cellNumericValue>0 && cellNumericValue > maxPrice) ||
-                                (!isNaN(minSum) && !isNaN(cellNumericValue) && cellNumericValue>0 && cellNumericValue < minSum) ||
-                                (!isNaN(maxSum) && !isNaN(cellNumericValue) && cellNumericValue>0 && cellNumericValue > maxSum)) {
-                                console.log("cellNumericValue", cellNumericValue);
-                                showRow = false;
-                                return false; // Выходим из цикла each
-                            }
-                        } else {
-                            // Проверяем соответствие значения поиска
-                            if (cellValue.indexOf(inputValue) === -1) {
-                                showRow = false;
-                                return false; // Выходим из цикла each
-                            }
-                        }
-                    }
+        <script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
+        <script>
+            $(document).ready(function () {
+                $("#searchInput").on("input", function () {
+                    var searchText = $(this).val().toLowerCase();
+                    $("#productsTable tbody tr").filter(function () {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
+                    });
                 });
-
-                // Отображаем или скрываем строку
-                if (showRow) {
-                    row.show();
-                } else {
-                    row.hide();
-                }
             });
-
-            // Скрываем прелоадер после завершения поиска
-            $("#loader").fadeOut("slow");
-        });
-    </script>
+        </script>
 
 {% endblock %}

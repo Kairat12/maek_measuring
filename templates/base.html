@@ -55,7 +55,7 @@
                         {# <img src="{% static '/journal/img/logo_footer.png' %}"/>#}
                         <h2 class="h6"><b>Контакты</b></h2>
                         <p>Мангистауская область, г. Актау, Промзона 7, здание 65</p>
-                        <p>Элекстронный адрес: <a href="mailto:maek@maek.kz">maek@maek.kz</a></p>
+                        <p>Элекстронный адрес: <a href="mailto:maek@maek.kz" class="text-white">maek@maek.kz</a></p>
                         <!--                        <p>Телефон доверия ТОО «МАЭК» по вопросам закупок: <a href="tel:+77292562100">+7(7292)-->
                         <!--                            562-100</a></p>-->
 
@@ -100,12 +100,12 @@
         });
 
     </script>
-    <script>
+{% endblock extra_js %}
+<script>
         $(window).on("load", function () {
             $("#loader").fadeOut("slow"); // После загрузки страницы прячем прелоадер
         });
     </script>
-{% endblock extra_js %}
 <style>
     /* Стили для прелоадера */
     #loader {

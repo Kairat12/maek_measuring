@@ -18,18 +18,22 @@ body {
 }
 
 #body {
-/*    padding: 10px;*/
-    padding-top: 75px; /* Add a top margin to avoid content overlay */
-    padding-bottom: 260px;
-    padding-left: 10px;
-    padding-right: 10px;
+    margin: 0;
+    padding: 0;
+    padding-top: 75px;
+    min-height: 100vh;
 }
 
 #footer {
-    position: absolute;
     bottom: 0;
     width: 100%;
     height: 260px;
+}
+.page-item.active .page-link{
+    background: #0477b1;
+}
+.page-link{
+    color: #0477b1;
 }
 
 #login_form{
@@ -41,7 +45,7 @@ body {
 
 }
 #login_form .login__wrapper{
-     background: rgba(255, 255, 255, 0.8);
+     background: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
     padding: 40px 20px;
 }
