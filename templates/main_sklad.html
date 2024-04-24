@@ -19,8 +19,8 @@
                                value="{{ request.GET.name }}">
                     </div>
                     <div class="col-3">
-                        <label>Поиск по номеру складу</label>
-                        <input type="text" name="number_sklad" class="form-control" placeholder="Поиск по номеру складу"
+                        <label>Поиск по складу</label>
+                        <input type="text" name="number_sklad" class="form-control" placeholder="Поиск по складу"
                                value="{{ request.GET.number_sklad }}">
                     </div>
                     <div class="col-3">
@@ -80,45 +80,48 @@
             </form>
 
             {% if main_sklads %}
-            <table class="table-bordered" id="productsTable">
-                <thead>
-                <tr>
-                    <th>Номенклатурный номер</th>
-                    <th>Наименование</th>
-                    <th>Единица измерения</th>
-                    <th>Количество</th>
-                    <th>Цена</th>
-                    <th>Сумма</th>
-                    <th>Дата поступления</th>
-                    <th> № склада</th>
-                    <th>Ответственный</th>
-                    <th>Контрагент</th>
-                    <th>Договор</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for main_sklad in main_sklads %}
+                <div class="h3">
+                    <p>Количество записей {{ main_sklads.count }} </p>
+                </div>
+                <table class="table-bordered" id="productsTable">
+                    <thead>
                     <tr>
-                        <td class="td_item_number">{{ main_sklad.item_number }}</td>
-                        <td class="td_name" style="max-width: 200px">{{ main_sklad.name }}</td>
-                        <td class="td_unit">{{ main_sklad.unit }}</td>
-                        <td class="td_quantity">{{ main_sklad.quantity|default_if_none:""|intcomma }}</td>
-                        <td class="td_price">{{ main_sklad.price|default_if_none:""|intcomma }}</td>
-                        <td class="td_sum">{{ main_sklad.sum|default_if_none:""|intcomma }}</td>
-                        <td class="td_date_receipt">{{ main_sklad.date_receipt|date:"d.m.Y" }}</td>
-                        <td class="td_number_sklad">{{ main_sklad.number_sklad }}</td>
-                        <td class="td_responsible">{{ main_sklad.responsible }}</td>
-                        <td class="td_contractor">{{ main_sklad.contractor|default_if_none:"" }}</td>
-                        <td class="td_agreement">{{ main_sklad.agreement|default_if_none:"" }}</td>
-
+                        <th>Номенклатурный номер</th>
+                        <th>Наименование</th>
+                        <th>Единица измерения</th>
+                        <th>Количество</th>
+                        <th>Цена</th>
+                        <th>Сумма</th>
+                        <th>Дата поступления</th>
+                        <th> № склада</th>
+                        <th>Ответственный</th>
+                        <th>Контрагент</th>
+                        <th>Договор</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-                {% else %}
-            <div>
-                <h3 class="h3">Ничего не найдено</h3>
-            </div>
+                    </thead>
+                    <tbody>
+                    {% for main_sklad in main_sklads %}
+                        <tr>
+                            <td class="td_item_number">{{ main_sklad.item_number }}</td>
+                            <td class="td_name" style="max-width: 200px">{{ main_sklad.name }}</td>
+                            <td class="td_unit">{{ main_sklad.unit }}</td>
+                            <td class="td_quantity">{{ main_sklad.quantity|default_if_none:""|intcomma }}</td>
+                            <td class="td_price">{{ main_sklad.price|default_if_none:""|intcomma }}</td>
+                            <td class="td_sum">{{ main_sklad.sum|default_if_none:""|intcomma }}</td>
+                            <td class="td_date_receipt">{{ main_sklad.date_receipt|date:"d.m.Y" }}</td>
+                            <td class="td_number_sklad">{{ main_sklad.number_sklad }}</td>
+                            <td class="td_responsible">{{ main_sklad.responsible }}</td>
+                            <td class="td_contractor">{{ main_sklad.contractor|default_if_none:"" }}</td>
+                            <td class="td_agreement">{{ main_sklad.agreement|default_if_none:"" }}</td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div>
+                    <h3 class="h3">Ничего не найдено</h3>
+                </div>
             {% endif %}
             <nav aria-label="Page navigation example">
                 <ul class="pagination mt-4">
