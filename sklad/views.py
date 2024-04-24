@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
 from django.db.models import Sum
@@ -14,6 +16,7 @@ def index(request):
 
 
 def main_sklad(request):
+    today = date.today()
     search_params = {
         'item_number__icontains': request.GET.get('item_number__icontains'),
         'name__icontains': request.GET.get('name__icontains'),
@@ -56,10 +59,8 @@ def main_sklad(request):
     except EmptyPage:
         main_sklads = paginator.page(paginator.num_pages)
 
-
-    print("search_querydict", search_querydict)
-
     return render(request, 'main_sklad.html', {'main_sklads': main_sklads,
+                                               'today': today,
                                                'main_sklads_count': main_sklads_count,
                                                'main_sklads_sum': main_sklads_sum,
                                                'search_querydict': search_querydict.urlencode(),

@@ -64,7 +64,8 @@
                             </div>
                             <div class="col">
                                 <input type="date" name="date_receipt__lte" class="form-control" placeholder="До"
-                                       value="{{ request.GET.date_receipt__lte }}">
+                                       value="{{ request.GET.date_receipt__lte }}" max="{{ today|date:'Y-m-d' }}"
+                                >
                             </div>
                         </div>
                     </div>
