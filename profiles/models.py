@@ -117,7 +117,7 @@ def ldap_auth_handler(user, ldap_user, **kwargs):
                               'eibragimov',
                               'eaqmaganbet', 'tislamov', 'bbaimuratuly', 'admin1', 'admin2',
                               'mbalhozhaev', 'aakkaisiyeva', 'ashangitbaev',
-                              'asmolenskiy', 'ndastanuly',
+                              'asmolenskiy',
                               ]
                 profile.user.is_active = True if profile.user.username in boss_users else False
                 profile.save()
