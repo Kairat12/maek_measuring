@@ -114,7 +114,7 @@
                             <td class="td_item_number">{{ main_sklad.item_number }}</td>
                             <td class="td_name" style="max-width: 200px">{{ main_sklad.name }}</td>
                             <td class="td_unit">{{ main_sklad.unit }}</td>
-                            <td class="td_quantity">{{ main_sklad.quantity|default_if_none:""|intcomma }}</td>
+                            <td class="td_quantity">{{ main_sklad.quantity|default_if_none:""|intcomma}}</td>
                             <td class="td_price">{{ main_sklad.price|default_if_none:""|intcomma }}</td>
                             <td class="td_sum">{{ main_sklad.sum|default_if_none:""|intcomma }}</td>
                             <td class="td_date_receipt">{{ main_sklad.date_receipt|date:"d.m.Y" }}</td>

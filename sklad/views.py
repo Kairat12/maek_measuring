@@ -1,4 +1,5 @@
 from datetime import date
+from decimal import Decimal
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
@@ -43,6 +44,13 @@ def main_sklad(request):
             else:
                 main_sklads = main_sklads.filter(**{field: value})
 
+    for main_sklad in main_sklads:
+        if main_sklad.price is not None:
+            main_sklad.price = Decimal(main_sklad.price).quantize(Decimal('0.01'))
+        if main_sklad.quantity is not None:
+            main_sklad.quantity = Decimal(main_sklad.quantity).quantize(Decimal('0.01'))
+        if main_sklad.sum is not None:
+            main_sklad.sum = Decimal(main_sklad.sum).quantize(Decimal('0.01'))
     main_sklads_count = len(main_sklads)
     main_sklads_sum = main_sklads.aggregate(sum=Sum('sum'))
 
