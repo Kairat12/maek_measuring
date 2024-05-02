@@ -53,7 +53,7 @@ def main_sklad(request):
         if main_sklad.sum is not None:
             main_sklad.sum = Decimal(main_sklad.sum).quantize(Decimal('0.01'))
     main_sklads_count = len(main_sklads)
-    main_sklads_sum = main_sklads.aggregate(sum=Round(Sum('sum'), 2))
+    main_sklads_sum = main_sklads.aggregate(sum=Round(Sum('sum')))
 
     items_per_page = 60
 
