@@ -4,6 +4,7 @@ from decimal import Decimal
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
 from django.db.models import Sum
+from django.db.models.functions import Round
 from django.http import QueryDict
 from django.shortcuts import render
 
@@ -52,7 +53,7 @@ def main_sklad(request):
         if main_sklad.sum is not None:
             main_sklad.sum = Decimal(main_sklad.sum).quantize(Decimal('0.01'))
     main_sklads_count = len(main_sklads)
-    main_sklads_sum = main_sklads.aggregate(sum=Sum('sum'))
+    main_sklads_sum = main_sklads.aggregate(sum=Round(Sum('sum'), 2))
 
     items_per_page = 60
 
