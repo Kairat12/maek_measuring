@@ -110,7 +110,7 @@ def ldap_auth_handler(user, ldap_user, **kwargs):
                 profile.department = dep
                 profile.position = tit
                 profile.mail = mail
-                boss_users = ['kkozhabay', 'ndastanuly', 'krakhimov', 'azhantore',
+                boss_users = ['kkozhabay', 'ndastanuly', 'krakhimov',
                               'szhelkushinov', 'vvasilev',
                               'asmolenskiy', 'amaratkyzy',
                               'nzhylkyshy', 'bborsanov', 'rumusaev', 'smomynov',
@@ -118,6 +118,7 @@ def ldap_auth_handler(user, ldap_user, **kwargs):
                               'eaqmaganbet', 'tislamov', 'bbaimuratuly', 'admin1', 'admin2',
                               'mbalhozhaev', 'aakkaisiyeva', 'ashangitbaev',
                               'asmolenskiy', 'sutebaev',
+                              'eibragimov', 'amakarenko', 'rvyshegorodskiy'
                               ]
                 profile.user.is_active = True if profile.user.username in boss_users else False
                 profile.save()
