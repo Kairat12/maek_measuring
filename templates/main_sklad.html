@@ -6,32 +6,27 @@
     <div class="contractor_content mb-5">
         <div class="container">
             <h3 class="h3 mt-2 mb-3">Товары на складе по состоянию на {{ today|date:"d.m.Y" }}</h3>
-            <form method="GET" action="{% url 'sklad:main_sklad' %}"
-                  class="w-100">
+            <form method="GET" action="{% url 'sklad:main_sklad' %}" class="w-100">
                 <div class="row mb-3 pt-4 pb-4 bg-dark-subtle row-gap-3 ms-0 me-0">
                     <div class="col-3">
                         <label>Поиск по номенклатуре</label>
                         <input type="text" name="item_number__icontains" class="form-control"
-                               placeholder="Поиск по номенклатуре"
-                               value="{{ request.GET.item_number__icontains }}">
+                               placeholder="Поиск по номенклатуре" value="{{ request.GET.item_number__icontains }}">
                     </div>
                     <div class="col-3">
                         <label>Поиск по наименованию</label>
                         <input type="text" name="name__icontains" class="form-control"
-                               placeholder="Поиск по наименованию"
-                               value="{{ request.GET.name__icontains }}">
+                               placeholder="Поиск по наименованию" value="{{ request.GET.name__icontains }}">
                     </div>
                     <div class="col-3">
                         <label>Поиск по складу</label>
                         <input type="text" name="number_sklad__icontains" class="form-control"
-                               placeholder="Поиск по складу"
-                               value="{{ request.GET.number_sklad__icontains }}">
+                               placeholder="Поиск по складу" value="{{ request.GET.number_sklad__icontains }}">
                     </div>
                     <div class="col-3">
                         <label>Поиск по подразделению</label>
                         <input type="text" name="responsible__icontains" class="form-control"
-                               placeholder="Поиск по подразделению"
-                               value="{{ request.GET.responsible__icontains }}">
+                               placeholder="Поиск по подразделению" value="{{ request.GET.responsible__icontains }}">
                     </div>
                     <div class="col-3">
                         <label>Поиск по цене</label>
@@ -46,7 +41,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-3">
                         <label>Поиск по сумме</label>
                         <div class="row">
@@ -69,23 +63,25 @@
                             </div>
                             <div class="col">
                                 <input type="date" name="date_receipt__lte" class="form-control" placeholder="До"
-                                       value="{{ request.GET.date_receipt__lte }}" max="{{ today|date:'Y-m-d' }}"
-                                >
+                                       value="{{ request.GET.date_receipt__lte }}" max="{{ today|date:'Y-m-d' }}">
                             </div>
                         </div>
                     </div>
                     <div class="col-3">
                         <label>Поиск по контрагентам</label>
                         <input type="text" name="contractor__icontains" class="form-control"
-                               placeholder="Поиск по контрагентам"
-                               value="{{ request.GET.contractor__icontains }}">
+                               placeholder="Поиск по контрагентам" value="{{ request.GET.contractor__icontains }}">
                     </div>
                     <div class="w-100 mt-2">
                         <button type="submit" class="btn btn-primary me-3">Поиск</button>
                         <a href="{% url 'sklad:main_sklad' %}#nofilter" class="btn btn-primary text-white">Сбросить</a>
+                        <button type="button" id="downloadReportButton" class="btn btn-danger text-white ms-3">Скачать
+                            отчет
+                        </button>
                     </div>
                 </div>
             </form>
+
 
             {% if main_sklads %}
                 <div class="h5">
@@ -114,7 +110,7 @@
                             <td class="td_item_number">{{ main_sklad.item_number }}</td>
                             <td class="td_name" style="max-width: 200px">{{ main_sklad.name }}</td>
                             <td class="td_unit">{{ main_sklad.unit }}</td>
-                            <td class="td_quantity">{{ main_sklad.quantity|default_if_none:""|intcomma}}</td>
+                            <td class="td_quantity">{{ main_sklad.quantity|default_if_none:""|intcomma }}</td>
                             <td class="td_price">{{ main_sklad.price|default_if_none:""|intcomma }}</td>
                             <td class="td_sum">{{ main_sklad.sum|default_if_none:""|intcomma }}</td>
                             <td class="td_date_receipt">{{ main_sklad.date_receipt|date:"d.m.Y" }}</td>
@@ -142,6 +138,9 @@
                                     aria-hidden="true">&laquo;</span></a></li>
                             <li class="page-item"><a class="page-link"
                                                      href="?page=
+
+
+
                                                              {{ main_sklads.previous_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8249;</a>
                             </li>
                         {% endif %}
@@ -151,6 +150,9 @@
                         {% if page_num >= main_sklads.number|add:"-2" and page_num <= main_sklads.number|add:"2" %}
                             <li class="page-item {% if page_num == main_sklads.number %}active{% endif %}">
                                 <a class="page-link" href="?page=
+
+
+
                                         {{ page_num }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">{{ page_num }}</a>
                             </li>
                         {% endif %}
@@ -158,10 +160,16 @@
 
                     {% if main_sklads.has_next %}
                         <li class="page-item"><a class="page-link" href="?page=
+
+
+
                                 {{ main_sklads.next_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8250;</a>
                         </li>
                         <li class="page-item"><a class="page-link"
                                                  href="?page=
+
+
+
                                                          {{ main_sklads.paginator.num_pages }}{% if search_querydict %}&{{ search_querydict }}{% endif %}"><span
                                 aria-hidden="true">&raquo;</span>
                         </a></li>
@@ -172,14 +180,47 @@
     </div>
     <script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
     <script>
-        $(document).ready(function () {
-            $("#searchInput").on("input", function () {
-                var searchText = $(this).val().toLowerCase();
-                $("#productsTable tbody tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(searchText) > -1);
+        document.getElementById('downloadReportButton').addEventListener('click', function () {
+            // Collect form data
+            const formData = new FormData(document.querySelector('form'));
+            const searchParams = new URLSearchParams();
+
+            for (const [key, value] of formData.entries()) {
+                if (value) {
+                    searchParams.append(key, value);
+                }
+            }
+
+            // URL of the endpoint
+            const url = `{% url 'sklad:main_sklad_report' %}?${searchParams.toString()}`;
+
+            // Sending the request using fetch
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.blob())
+                .then(blob => {
+                    // Create a link element to trigger the download
+                    const date = new Date();
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const currentDate = `${year}-${month}-${day}`;
+
+                    // Create a link element to trigger the download
+                    const link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = `report_sklad_${currentDate}.xlsx`; // Filename with current date
+                    link.click();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
                 });
-            });
         });
     </script>
+
 
 {% endblock %}

@@ -1,12 +1,14 @@
 from datetime import date
 from decimal import Decimal
 
+import openpyxl
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
 from django.db.models import Sum
 from django.db.models.functions import Round
-from django.http import QueryDict
+from django.http import QueryDict, HttpResponse
 from django.shortcuts import render
+from django.utils import timezone
 
 from sklad.models import MainSklad
 
@@ -74,3 +76,48 @@ def main_sklad(request):
                                                'main_sklads_sum': main_sklads_sum,
                                                'search_querydict': search_querydict.urlencode(),
                                                })
+
+
+def main_sklad_report(request):
+    search_params = {
+        'item_number__icontains': request.GET.get('item_number__icontains'),
+        'name__icontains': request.GET.get('name__icontains'),
+        'number_sklad__icontains': request.GET.get('number_sklad__icontains'),
+        'responsible__icontains': request.GET.get('responsible__icontains'),
+        'price__gte': request.GET.get('price__gte'),
+        'price__lte': request.GET.get('price__lte'),
+        'sum__gte': request.GET.get('sum__gte'),
+        'sum__lte': request.GET.get('sum__lte'),
+        'date_receipt__gte': request.GET.get('date_receipt__gte'),
+        'date_receipt__lte': request.GET.get('date_receipt__lte'),
+        'contractor__icontains': request.GET.get('contractor__icontains'),
+    }
+    search_params = {k: v for k, v in search_params.items() if v}
+
+    main_sklads = MainSklad.objects.filter(**search_params)
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = 'Отчет'
+    headers = ['Номенклатурный номер', 'Наименование', '№ склада', 'Ответственный', 'Цена', 'Сумма', 'Дата поступления', 'Контрагент']
+    ws.append(headers)
+
+    # Writing data rows
+    for item in main_sklads:
+        ws.append([
+            item.item_number,
+            item.name,
+            item.number_sklad,
+            item.responsible,
+            item.price,
+            item.sum,
+            item.date_receipt,
+            item.contractor,
+        ])
+    current_date = timezone.now().strftime('%Y-%m-%d')
+    # Creating HTTP response with the Excel file
+    filename = f'report_sklad_{current_date}.xlsx'
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = f'attachment; filename={filename}'
+    wb.save(response)
+
+    return response
