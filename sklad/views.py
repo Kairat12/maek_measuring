@@ -98,7 +98,9 @@ def main_sklad_report(request):
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = 'Отчет'
-    headers = ['Номенклатурный номер', 'Наименование', '№ склада', 'Ответственный', 'Цена', 'Сумма', 'Дата поступления', 'Контрагент']
+    headers = ['Номенклатурный номер', 'Наименование', '№ склада', 'Ответственный','Единица измерения',
+               'Количество','Цена', 'Сумма', 'Дата поступления',
+               'Контрагент', 'Договор']
     ws.append(headers)
 
     # Writing data rows
@@ -108,10 +110,13 @@ def main_sklad_report(request):
             item.name,
             item.number_sklad,
             item.responsible,
+            item.unit,
+            item.quantity,
             item.price,
             item.sum,
             item.date_receipt,
             item.contractor,
+            item.agreement,
         ])
     current_date = timezone.now().strftime('%Y-%m-%d')
     # Creating HTTP response with the Excel file
