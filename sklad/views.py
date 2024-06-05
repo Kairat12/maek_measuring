@@ -33,6 +33,7 @@ def main_sklad(request):
         'number_sklad__icontains': request.GET.get('number_sklad__icontains'),
         'responsible__icontains': request.GET.get('responsible__icontains'),
         'contractor__icontains': request.GET.get('contractor__icontains'),
+        'agreement__icontains': request.GET.get('agreement__icontains'),
     }
     search_querydict = QueryDict(mutable=True)
     for key, value in search_params.items():
@@ -91,6 +92,7 @@ def main_sklad_report(request):
         'date_receipt__gte': request.GET.get('date_receipt__gte'),
         'date_receipt__lte': request.GET.get('date_receipt__lte'),
         'contractor__icontains': request.GET.get('contractor__icontains'),
+        'agreement__icontains': request.GET.get('agreement__icontains'),
     }
     search_params = {k: v for k, v in search_params.items() if v}
 
