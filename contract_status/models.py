@@ -7,7 +7,7 @@ class ContractStatus(models.Model):
     contractor = models.CharField(max_length=350, verbose_name='Контрагент')
     contract_name = models.CharField(max_length=350, verbose_name='Договор')
     registration_date = models.DateField(verbose_name='Дата регистрации')
-    contract_sum = models.DecimalField(decimal_places=3, max_digits=100,verbose_name='Сумма по договору', null=True, blank=True)
+    contract_sum = models.DecimalField(decimal_places=2, max_digits=100,verbose_name='Сумма по договору', null=True, blank=True)
     delivery_deadline = models.DateField(null=True, verbose_name='Крайний срок поставки', blank=True)
     date_receipt = models.DateField(null=True, verbose_name='Дата поступления', blank=True)
     payment_indicator = models.CharField(max_length=100, verbose_name='Признак оплаты', null=True, blank=True)
