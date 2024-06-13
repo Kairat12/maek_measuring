@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load static %}
+{% block content %}
+
+    <div class="contractor_content mb-5">
+        <div class="container">
+            <h3 class="h3 mt-2 mb-3">Состояние договоров на {{ today|date:"d.m.Y" }}</h3>
+            <form method="GET" action="{% url 'contract_status:contract_status' %}" class="w-100">
+                <div class="row mb-3 pt-4 pb-4 bg-dark-subtle row-gap-3 ms-0 me-0">
+                    <div class="col-3">
+                        <label>Поиск по краткому содержанию</label>
+                        <input type="text" name="short_description__icontains" class="form-control"
+                               placeholder="Поиск по краткому содержанию" value="{{ request.GET.short_description__icontains }}">
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по контрагентам</label>
+                        <input type="text" name="name__icontains" class="form-control"
+                               placeholder="Поиск по контрагентам" value="{{ request.GET.contractor__icontains }}">
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по договорам</label>
+                        <input type="text" name="contract_name__icontains" class="form-control"
+                               placeholder="Поиск по складу" value="{{ request.GET.contract_name__icontains }}">
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по подразделению</label>
+                        <input type="text" name="responsible__icontains" class="form-control"
+                               placeholder="Поиск по подразделению" value="{{ request.GET.responsible__icontains }}">
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по сумме</label>
+                        <div class="row">
+                            <div class="col">
+                                <input type="number" name="contract_sum__gte" class="form-control" placeholder="От"
+                                       value="{{ request.GET.contract_sum__gte }}">
+                            </div>
+                            <div class="col">
+                                <input type="number" name="contract_sum__lte" class="form-control" placeholder="До"
+                                       value="{{ request.GET.contract_sum__lte }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по дате поступления</label>
+                        <div class="row">
+                            <div class="col">
+                                <input type="date" name="date_receipt__gte" class="form-control" placeholder="От"
+                                       value="{{ request.GET.date_receipt__gte }}">
+                            </div>
+                            <div class="col">
+                                <input type="date" name="date_receipt__lte" class="form-control" placeholder="До"
+                                       value="{{ request.GET.date_receipt__lte }}" max="{{ today|date:'Y-m-d' }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по крайнему сроку поставки</label>
+                        <div class="row">
+                            <div class="col">
+                                <input type="date" name="delivery_deadline__gte" class="form-control" placeholder="От"
+                                       value="{{ request.GET.delivery_deadline__gte }}">
+                            </div>
+                            <div class="col">
+                                <input type="date" name="delivery_deadline__lte" class="form-control" placeholder="До"
+                                       value="{{ request.GET.delivery_deadline__lte }}" max="{{ today|date:'Y-m-d' }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по признак оплаты</label>
+                        <input type="text" name="payment_indicator__icontains" class="form-control"
+                               placeholder="Поиск по контрагентам" value="{{ request.GET.payment_indicator__icontains }}">
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по договорам</label>
+                        <input type="text" name="agreement__icontains" class="form-control"
+                               placeholder="Поиск по договорам" value="{{ request.GET.agreement__icontains }}">
+                    </div>
+                    <div class="w-100 mt-2">
+                        <button type="submit" class="btn btn-primary me-3">Поиск</button>
+                        <a href="{% url 'sklad:main_sklad' %}#nofilter" class="btn btn-primary text-white">Сбросить</a>
+                        <button type="button" id="downloadReportButton" class="btn btn-success text-white ms-3">Скачать
+                            отчет
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+
+            {% if main_sklads %}
+                <div class="h5">
+                    <p>Количество записей: <b>{{ main_sklads_count }}</b></p>
+                    <p>Общая сумма: <b>{{ main_sklads_sum.sum|intcomma }} тг</b></p>
+                </div>
+                <table class="table-bordered" id="productsTable">
+                    <thead>
+                    <tr>
+                        <th>Номенклатурный номер</th>
+                        <th>Наименование</th>
+                        <th>Единица измерения</th>
+                        <th>Количество</th>
+                        <th>Цена</th>
+                        <th>Сумма</th>
+                        <th>Дата поступления</th>
+                        <th> № склада</th>
+                        <th>Ответственный</th>
+                        <th>Контрагент</th>
+                        <th>Договор</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for main_sklad in main_sklads %}
+                        <tr>
+                            <td class="td_item_number">{{ main_sklad.item_number }}</td>
+                            <td class="td_name" style="max-width: 200px">{{ main_sklad.name }}</td>
+                            <td class="td_unit">{{ main_sklad.unit }}</td>
+                            <td class="td_quantity">{{ main_sklad.quantity|default_if_none:""|intcomma }}</td>
+                            <td class="td_price">{{ main_sklad.price|default_if_none:""|intcomma }}</td>
+                            <td class="td_sum">{{ main_sklad.sum|default_if_none:""|intcomma }}</td>
+                            <td class="td_date_receipt">{{ main_sklad.date_receipt|date:"d.m.Y" }}</td>
+                            <td class="td_number_sklad">{{ main_sklad.number_sklad }}</td>
+                            <td class="td_responsible">{{ main_sklad.responsible }}</td>
+                            <td class="td_contractor">{{ main_sklad.contractor|default_if_none:"" }}</td>
+                            <td class="td_agreement">{{ main_sklad.agreement|default_if_none:"" }}</td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div>
+                    <h3 class="h3">Ничего не найдено</h3>
+                </div>
+            {% endif %}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination mt-4">
+                    <li class="step-links">
+                        {% if main_sklads.has_previous %}
+                            <li class="page-item"><a class="page-link"
+                                                     href="?page=1{% if search_querydict %}&{{ search_querydict }}{% endif %}"
+                                                     aria-label="Previous"><span
+                                    aria-hidden="true">&laquo;</span></a></li>
+                            <li class="page-item"><a class="page-link"
+                                                     href="?page={{ main_sklads.previous_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8249;</a>
+                            </li>
+                        {% endif %}
+                    </li>
+
+                    {% for page_num in main_sklads.paginator.page_range %}
+                        {% if page_num >= main_sklads.number|add:"-2" and page_num <= main_sklads.number|add:"2" %}
+                            <li class="page-item {% if page_num == main_sklads.number %}active{% endif %}">
+                                <a class="page-link" href="?page={{ page_num }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">{{ page_num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if main_sklads.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ main_sklads.next_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8250;</a>
+                        </li>
+                        <li class="page-item"><a class="page-link"
+                                                 href="?page={{ main_sklads.paginator.num_pages }}{% if search_querydict %}&{{ search_querydict }}{% endif %}"><span
+                                aria-hidden="true">&raquo;</span>
+                        </a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    <script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
+    <script>
+        document.getElementById('downloadReportButton').addEventListener('click', function () {
+            // Collect form data
+            const formData = new FormData(document.querySelector('form'));
+            const searchParams = new URLSearchParams();
+
+            for (const [key, value] of formData.entries()) {
+                if (value) {
+                    searchParams.append(key, value);
+                }
+            }
+
+            // URL of the endpoint
+            const url = `{% url 'sklad:main_sklad_report' %}?${searchParams.toString()}`;
+
+            // Sending the request using fetch
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.blob())
+                .then(blob => {
+                    // Create a link element to trigger the download
+                    const date = new Date();
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const currentDate = `${year}-${month}-${day}`;
+
+                    // Create a link element to trigger the download
+                    const link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = `report_sklad_${currentDate}.xlsx`; // Filename with current date
+                    link.click();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    </script>
+
+
+{% endblock %}

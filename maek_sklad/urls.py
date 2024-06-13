@@ -24,4 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     re_path('', include('profiles.urls', namespace='profiles')),
     path('', include('sklad.urls', namespace='sklad')),
+    path('', include('contract_status.urls', namespace='contract_status')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

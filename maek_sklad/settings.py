@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'profiles',
     'sklad',
+    'contract_status',
     'widget_tweaks',
     'crispy_forms',
 ]
