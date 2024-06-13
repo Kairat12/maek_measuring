@@ -7,4 +7,4 @@ from contract_status.models import ContractStatus
 class ContractStatusAdmin(admin.ModelAdmin):
     search_fields = ['short_description']
 
-admin.site.register(ContractStatusAdmin,ContractStatus)
+admin.site.register(ContractStatus, ContractStatusAdmin)
