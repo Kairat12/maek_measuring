@@ -37,6 +37,19 @@
                         </div>
                     </div>
                     <div class="col-3">
+                        <label>Поиск по дате регистрации</label>
+                        <div class="row">
+                            <div class="col">
+                                <input type="date" name="registration_date__gte" class="form-control" placeholder="От"
+                                       value="{{ request.GET.registration_date__gte }}">
+                            </div>
+                            <div class="col">
+                                <input type="date" name="registration_date__lte" class="form-control" placeholder="До"
+                                       value="{{ request.GET.registration_date__lte }}" max="{{ today|date:'Y-m-d' }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
                         <label>Поиск по дате поступления</label>
                         <div class="row">
                             <div class="col">

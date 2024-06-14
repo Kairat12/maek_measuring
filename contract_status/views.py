@@ -24,6 +24,8 @@ def contract_status(request):
         'date_receipt__lte': request.GET.get('date_receipt__lte'),
         'delivery_deadline__gte': request.GET.get('delivery_deadline__gte'),
         'delivery_deadline__lte': request.GET.get('delivery_deadline__lte'),
+        'registration_date__gte': request.GET.get('registration_date__gte'),
+        'registration_date__lte': request.GET.get('registration_date__lte'),
         'payment_indicator__icontains': request.GET.get('payment_indicator__icontains'),
         'supervising_service__icontains': request.GET.get('supervising_service__icontains'),
         'responsible__icontains': request.GET.get('responsible__icontains'),
