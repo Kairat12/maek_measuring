@@ -11,7 +11,8 @@
                     <div class="col-3">
                         <label>Поиск по краткому содержанию</label>
                         <input type="text" name="short_description__icontains" class="form-control"
-                               placeholder="Поиск по краткому содержанию" value="{{ request.GET.short_description__icontains }}">
+                               placeholder="Поиск по краткому содержанию"
+                               value="{{ request.GET.short_description__icontains }}">
                     </div>
                     <div class="col-3">
                         <label>Поиск по контрагентам</label>
@@ -77,47 +78,94 @@
                     </div>
                     <div class="col-3">
                         <label>Поиск по признаку оплаты</label>
-                        <select class="form-control form-select" name="payment_indicator__icontains" >
-                            <option value="" selected disabled style="font-style: italic;"><em>Выберите признак оплаты</em></option>
-                            <option value="Оплачен(а)">Оплачен(а)</option>
-                            <option value="Принята">Принята</option>
-                            <option value="Формируемый(ая, ое)">Формируемый(ая, ое)</option>
-                            <option value="Передана">Передана</option>
-                            <option value="Включена в реестр">Включена в реестр</option>
-
+                        <select class="form-control form-select" name="payment_indicator__icontains">
+                            <option value="" disabled style="font-style: italic;"
+                                    {% if request.GET.payment_indicator__icontains == "" %}selected{% endif %}>
+                                <em>Выберите признак оплаты</em>
+                            </option>
+                            <option value="База"
+                                    {% if request.GET.payment_indicator__icontains == "База" %}selected{% endif %}>
+                                База
+                            </option>
+                            <option value="В распоряжении"
+                                    {% if request.GET.payment_indicator__icontains == "В распоряжении" %}selected{% endif %}>
+                                В распоряжении
+                            </option>
+                            <option value="Включена в реестр"
+                                    {% if request.GET.payment_indicator__icontains == "Включена в реестр" %}selected{% endif %}>
+                                Включена в реестр
+                            </option>
+                            <option value="Исполнен(а,о)"
+                                    {% if request.GET.payment_indicator__icontains == "Исполнен(а,о)" %}selected{% endif %}>
+                                Исполнен(а,о)
+                            </option>
+                            <option value="Оплачен(а)"
+                                    {% if request.GET.payment_indicator__icontains == "Оплачен(а)" %}selected{% endif %}>
+                                Оплачен(а)
+                            </option>
+                            <option value="Отклонена"
+                                    {% if request.GET.payment_indicator__icontains == "Отклонена" %}selected{% endif %}>
+                                Отклонена
+                            </option>
+                            <option value="Отправлено в банк"
+                                    {% if request.GET.payment_indicator__icontains == "Отправлено в банк" %}selected{% endif %}>
+                                Отправлено в банк
+                            </option>
+                            <option value="Передана"
+                                    {% if request.GET.payment_indicator__icontains == "Передана" %}selected{% endif %}>
+                                Передана
+                            </option>
+                            <option value="Принята"
+                                    {% if request.GET.payment_indicator__icontains == "Принята" %}selected{% endif %}>
+                                Принята
+                            </option>
+                            <option value="Утвержден(о)"
+                                    {% if request.GET.payment_indicator__icontains == "Утвержден(о)" %}selected{% endif %}>
+                                Утвержден(о)
+                            </option>
+                            <option value="Формируемый(ая, ое)"
+                                    {% if request.GET.payment_indicator__icontains == "Формируемый(ая, ое)" %}selected{% endif %}>
+                                Формируемый(ая, ое)
+                            </option>
                         </select>
                     </div>
                     <div class="col-3">
                         <label>Поиск по курирующим службам</label>
                         <input type="text" name="supervising_service__icontains" class="form-control"
-                               placeholder="Поиск по курирующим службам" value="{{ request.GET.supervising_service__icontains }}">
+                               placeholder="Поиск по курирующим службам"
+                               value="{{ request.GET.supervising_service__icontains }}">
                     </div>
                     <div class="col-3">
                         <label>Поиск по ответственным по договорам</label>
                         <input type="text" name="responsible__icontains" class="form-control"
-                               placeholder="Поиск по ответственным по договорам" value="{{ request.GET.responsible__icontains }}">
+                               placeholder="Поиск по ответственным по договорам"
+                               value="{{ request.GET.responsible__icontains }}">
                     </div>
                     <div class="col-3">
                         <label>Поиск по статусу договора</label>
                         <input type="text" name="contract_status__icontains" class="form-control"
-                               placeholder="Поиск по статусу договора" value="{{ request.GET.contract_status__icontains }}">
+                               placeholder="Поиск по статусу договора"
+                               value="{{ request.GET.contract_status__icontains }}">
                     </div>
                     <div class="col-3">
                         <label>Поиск по складу поступления </label>
                         <input type="text" name="receipt_warehouse__icontains" class="form-control"
-                               placeholder="Поиск по складу поступления " value="{{ request.GET.receipt_warehouse__icontains }}">
+                               placeholder="Поиск по складу поступления "
+                               value="{{ request.GET.receipt_warehouse__icontains }}">
                     </div>
                     <div class="col-3">
                         <label>Поиск по ответственным склада</label>
                         <input type="text" name="responsible_warehouse__icontains" class="form-control"
-                               placeholder="Поиск по ответственным склада" value="{{ request.GET.responsible_warehouse__icontains }}">
+                               placeholder="Поиск по ответственным склада"
+                               value="{{ request.GET.responsible_warehouse__icontains }}">
                     </div>
                     <div class="w-100 mt-2">
                         <button type="submit" class="btn btn-primary me-3">Поиск</button>
-                        <a href="{% url 'contract_status:contract_status' %}#nofilter" class="btn btn-primary text-white">Сбросить</a>
-{#                        <button type="button" id="downloadReportButton" class="btn btn-success text-white ms-3">Скачать#}
-{#                            отчет#}
-{#                        </button>#}
+                        <a href="{% url 'contract_status:contract_status' %}#nofilter"
+                           class="btn btn-primary text-white">Сбросить</a>
+                        {#                        <button type="button" id="downloadReportButton" class="btn btn-success text-white ms-3">Скачать#}
+                        {#                            отчет#}
+                        {#                        </button>#}
                     </div>
                 </div>
             </form>
@@ -181,7 +229,8 @@
                                                      aria-label="Previous"><span
                                     aria-hidden="true">&laquo;</span></a></li>
                             <li class="page-item"><a class="page-link"
-                                                     href="?page={{ main_sklads.previous_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8249;</a>
+                                                     href="?page=
+                                                             {{ main_sklads.previous_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8249;</a>
                             </li>
                         {% endif %}
                     </li>
@@ -189,16 +238,19 @@
                     {% for page_num in main_sklads.paginator.page_range %}
                         {% if page_num >= main_sklads.number|add:"-2" and page_num <= main_sklads.number|add:"2" %}
                             <li class="page-item {% if page_num == main_sklads.number %}active{% endif %}">
-                                <a class="page-link" href="?page={{ page_num }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">{{ page_num }}</a>
+                                <a class="page-link" href="?page=
+                                        {{ page_num }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">{{ page_num }}</a>
                             </li>
                         {% endif %}
                     {% endfor %}
 
                     {% if main_sklads.has_next %}
-                        <li class="page-item"><a class="page-link" href="?page={{ main_sklads.next_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8250;</a>
+                        <li class="page-item"><a class="page-link" href="?page=
+                                {{ main_sklads.next_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8250;</a>
                         </li>
                         <li class="page-item"><a class="page-link"
-                                                 href="?page={{ main_sklads.paginator.num_pages }}{% if search_querydict %}&{{ search_querydict }}{% endif %}"><span
+                                                 href="?page=
+                                                         {{ main_sklads.paginator.num_pages }}{% if search_querydict %}&{{ search_querydict }}{% endif %}"><span
                                 aria-hidden="true">&raquo;</span>
                         </a></li>
                     {% endif %}
