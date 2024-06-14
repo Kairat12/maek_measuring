@@ -15,18 +15,13 @@
                     </div>
                     <div class="col-3">
                         <label>Поиск по контрагентам</label>
-                        <input type="text" name="name__icontains" class="form-control"
+                        <input type="text" name="contractor__icontains" class="form-control"
                                placeholder="Поиск по контрагентам" value="{{ request.GET.contractor__icontains }}">
                     </div>
                     <div class="col-3">
                         <label>Поиск по договорам</label>
                         <input type="text" name="contract_name__icontains" class="form-control"
-                               placeholder="Поиск по складу" value="{{ request.GET.contract_name__icontains }}">
-                    </div>
-                    <div class="col-3">
-                        <label>Поиск по подразделению</label>
-                        <input type="text" name="responsible__icontains" class="form-control"
-                               placeholder="Поиск по подразделению" value="{{ request.GET.responsible__icontains }}">
+                               placeholder="Поиск по договорам" value="{{ request.GET.contract_name__icontains }}">
                     </div>
                     <div class="col-3">
                         <label>Поиск по сумме</label>
@@ -70,19 +65,39 @@
                     <div class="col-3">
                         <label>Поиск по признак оплаты</label>
                         <input type="text" name="payment_indicator__icontains" class="form-control"
-                               placeholder="Поиск по контрагентам" value="{{ request.GET.payment_indicator__icontains }}">
+                               placeholder="Поиск по признак оплаты" value="{{ request.GET.payment_indicator__icontains }}">
                     </div>
                     <div class="col-3">
-                        <label>Поиск по договорам</label>
-                        <input type="text" name="agreement__icontains" class="form-control"
-                               placeholder="Поиск по договорам" value="{{ request.GET.agreement__icontains }}">
+                        <label>Поиск по курирующим службам</label>
+                        <input type="text" name="supervising_service__icontains" class="form-control"
+                               placeholder="Поиск по курирующим службам" value="{{ request.GET.supervising_service__icontains }}">
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по Ответственным по договорам</label>
+                        <input type="text" name="responsible__icontains" class="form-control"
+                               placeholder="Поиск по курирующим службам" value="{{ request.GET.responsible__icontains }}">
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по статусу договора</label>
+                        <input type="text" name="contract_status__icontains" class="form-control"
+                               placeholder="Поиск по статусу договора" value="{{ request.GET.contract_status__icontains }}">
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по складу поступления </label>
+                        <input type="text" name="receipt_warehouse__icontains" class="form-control"
+                               placeholder="Поиск по складу поступления " value="{{ request.GET.receipt_warehouse__icontains }}">
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по складу поступления </label>
+                        <input type="text" name="responsible_warehouse__icontains" class="form-control"
+                               placeholder="Поиск по складу поступления " value="{{ request.GET.responsible_warehouse__icontains }}">
                     </div>
                     <div class="w-100 mt-2">
                         <button type="submit" class="btn btn-primary me-3">Поиск</button>
-                        <a href="{% url 'sklad:main_sklad' %}#nofilter" class="btn btn-primary text-white">Сбросить</a>
-                        <button type="button" id="downloadReportButton" class="btn btn-success text-white ms-3">Скачать
-                            отчет
-                        </button>
+                        <a href="{% url 'contract_status:contract_status' %}#nofilter" class="btn btn-primary text-white">Сбросить</a>
+{#                        <button type="button" id="downloadReportButton" class="btn btn-success text-white ms-3">Скачать#}
+{#                            отчет#}
+{#                        </button>#}
                     </div>
                 </div>
             </form>
@@ -91,38 +106,42 @@
             {% if main_sklads %}
                 <div class="h5">
                     <p>Количество записей: <b>{{ main_sklads_count }}</b></p>
-                    <p>Общая сумма: <b>{{ main_sklads_sum.sum|intcomma }} тг</b></p>
+                    <p>Общая сумма: <b>{{ main_sklads_sum.contract_sum|intcomma }} тг</b></p>
                 </div>
                 <table class="table-bordered" id="productsTable">
                     <thead>
                     <tr>
-                        <th>Номенклатурный номер</th>
-                        <th>Наименование</th>
-                        <th>Единица измерения</th>
-                        <th>Количество</th>
-                        <th>Цена</th>
-                        <th>Сумма</th>
-                        <th>Дата поступления</th>
-                        <th> № склада</th>
-                        <th>Ответственный</th>
+                        <th>Краткое содержание</th>
                         <th>Контрагент</th>
                         <th>Договор</th>
+                        <th>Дата регистрации</th>
+                        <th>Сумма по договору</th>
+                        <th>Крайний срок поставки</th>
+                        <th>Дата поступления</th>
+                        <th>Признак оплаты</th>
+                        <th> Курирующая служба</th>
+                        <th>Ответственный по договору</th>
+                        <th>Статус договора</th>
+                        <th>Склад поступления</th>
+                        <th>Ответственный склада</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for main_sklad in main_sklads %}
                         <tr>
-                            <td class="td_item_number">{{ main_sklad.item_number }}</td>
-                            <td class="td_name" style="max-width: 200px">{{ main_sklad.name }}</td>
-                            <td class="td_unit">{{ main_sklad.unit }}</td>
-                            <td class="td_quantity">{{ main_sklad.quantity|default_if_none:""|intcomma }}</td>
-                            <td class="td_price">{{ main_sklad.price|default_if_none:""|intcomma }}</td>
-                            <td class="td_sum">{{ main_sklad.sum|default_if_none:""|intcomma }}</td>
+                            <td class="td_item_number">{{ main_sklad.short_description }}</td>
+                            <td class="td_name" style="max-width: 200px">{{ main_sklad.contractor }}</td>
+                            <td class="td_unit">{{ main_sklad.contract_name }}</td>
+                            <td class="td_date_receipt">{{ main_sklad.registration_date|date:"d.m.Y" }}</td>
+                            <td class="td_quantity">{{ main_sklad.contract_sum|default_if_none:""|intcomma }}</td>
+                            <td class="td_date_receipt">{{ main_sklad.delivery_deadline|date:"d.m.Y" }}</td>
                             <td class="td_date_receipt">{{ main_sklad.date_receipt|date:"d.m.Y" }}</td>
-                            <td class="td_number_sklad">{{ main_sklad.number_sklad }}</td>
-                            <td class="td_responsible">{{ main_sklad.responsible }}</td>
-                            <td class="td_contractor">{{ main_sklad.contractor|default_if_none:"" }}</td>
-                            <td class="td_agreement">{{ main_sklad.agreement|default_if_none:"" }}</td>
+                            <td class="td_price">{{ main_sklad.payment_indicator }}</td>
+                            <td class="td_sum">{{ main_sklad.supervising_service }}</td>
+                            <td class="td_number_sklad">{{ main_sklad.responsible }}</td>
+                            <td class="td_responsible">{{ main_sklad.contract_status }}</td>
+                            <td class="td_contractor">{{ main_sklad.receipt_warehouse }}</td>
+                            <td class="td_agreement">{{ main_sklad.responsible_warehouse }}</td>
 
                         </tr>
                     {% endfor %}

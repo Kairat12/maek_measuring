@@ -22,8 +22,8 @@ def contract_status(request):
         'contract_sum__lte': request.GET.get('contract_sum__lte'),
         'date_receipt__gte': request.GET.get('date_receipt__gte'),
         'date_receipt__lte': request.GET.get('date_receipt__lte'),
-        'registration_date__gte': request.GET.get('date_receipt__gte'),
-        'registration_date__lte': request.GET.get('date_receipt__lte'),
+        'delivery_deadline__gte': request.GET.get('delivery_deadline__gte'),
+        'delivery_deadline__lte': request.GET.get('delivery_deadline__lte'),
         'payment_indicator__icontains': request.GET.get('payment_indicator__icontains'),
         'supervising_service__icontains': request.GET.get('supervising_service__icontains'),
         'responsible__icontains': request.GET.get('responsible__icontains'),
@@ -46,9 +46,9 @@ def contract_status(request):
 
     for main_sklad in main_sklads:
         if main_sklad.contract_sum is not None:
-            main_sklad.sum = Decimal(main_sklad.sum).quantize(Decimal('0.01'))
+            main_sklad.contract_sum = Decimal(main_sklad.contract_sum).quantize(Decimal('0.01'))
     main_sklads_count = len(main_sklads)
-    main_sklads_sum = main_sklads.aggregate(sum=Round(Sum('contract_sum')))
+    main_sklads_sum = main_sklads.aggregate(contract_sum=Round(Sum('contract_sum')))
 
     items_per_page = 60
 
