@@ -77,8 +77,15 @@
                     </div>
                     <div class="col-3">
                         <label>Поиск по признаку оплаты</label>
-                        <input type="text" name="payment_indicator__icontains" class="form-control"
-                               placeholder="Поиск по признаку оплаты" value="{{ request.GET.payment_indicator__icontains }}">
+                        <select class="form-control form-select" name="payment_indicator__icontains" >
+                            <option value="" selected disabled style="font-style: italic;"><em>Выберите признак оплаты</em></option>
+                            <option value="Оплачен(а)">Оплачен(а)</option>
+                            <option value="Принята">Принята</option>
+                            <option value="Формируемый(ая, ое)">Формируемый(ая, ое)</option>
+                            <option value="Передана">Передана</option>
+                            <option value="Включена в реестр">Включена в реестр</option>
+
+                        </select>
                     </div>
                     <div class="col-3">
                         <label>Поиск по курирующим службам</label>
