@@ -73,9 +73,9 @@
                                placeholder="Поиск по курирующим службам" value="{{ request.GET.supervising_service__icontains }}">
                     </div>
                     <div class="col-3">
-                        <label>Поиск по Ответственным по договорам</label>
+                        <label>Поиск по ответственным по договорам</label>
                         <input type="text" name="responsible__icontains" class="form-control"
-                               placeholder="Поиск по курирующим службам" value="{{ request.GET.responsible__icontains }}">
+                               placeholder="Поиск по ответственным по договорам" value="{{ request.GET.responsible__icontains }}">
                     </div>
                     <div class="col-3">
                         <label>Поиск по статусу договора</label>
@@ -88,9 +88,9 @@
                                placeholder="Поиск по складу поступления " value="{{ request.GET.receipt_warehouse__icontains }}">
                     </div>
                     <div class="col-3">
-                        <label>Поиск по складу поступления </label>
+                        <label>Поиск по ответственным склада</label>
                         <input type="text" name="responsible_warehouse__icontains" class="form-control"
-                               placeholder="Поиск по складу поступления " value="{{ request.GET.responsible_warehouse__icontains }}">
+                               placeholder="Поиск по ответственным склада" value="{{ request.GET.responsible_warehouse__icontains }}">
                     </div>
                     <div class="w-100 mt-2">
                         <button type="submit" class="btn btn-primary me-3">Поиск</button>
