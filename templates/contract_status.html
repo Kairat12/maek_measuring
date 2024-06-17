@@ -7,16 +7,26 @@
         <div class="container">
             <h3 class="h3 mt-2 mb-3">Состояние договоров на {{ today|date:"d.m.Y" }}</h3>
             <form method="GET" action="{% url 'contract_status:contract_status' %}" class="w-100">
-                <input type="hidden" name="type_procurement_item" id="type_procurement_item" value="{{ request.GET.type_procurement_item|default:'Товар' }}">
+                <input type="hidden" name="type_procurement_item" id="type_procurement_item"
+                       value="{{ request.GET.type_procurement_item|default:'Товар' }}">
                 <ul class="nav nav-pills nav-fill mb-5">
                     <li class="nav-item" role="presentation">
-                        <button type="button" onclick="setTypeProcurementItem('Товар')" class="btn btn-link {% if request.GET.type_procurement_item == 'Товар' or not request.GET.type_procurement_item %}active{% endif %} w-100">Товар</button>
+                        <button type="button" onclick="setTypeProcurementItem('Товар')"
+                                class="btn btn-link {% if request.GET.type_procurement_item == 'Товар' or not request.GET.type_procurement_item %}active{% endif %} w-100">
+                            Товар
+                        </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button type="button" onclick="setTypeProcurementItem('Работа')" class="btn btn-link {% if request.GET.type_procurement_item == 'Работа' %}active{% endif %} w-100">Работа</button>
+                        <button type="button" onclick="setTypeProcurementItem('Работа')"
+                                class="btn btn-link {% if request.GET.type_procurement_item == 'Работа' %}active{% endif %} w-100">
+                            Работа
+                        </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button type="button" onclick="setTypeProcurementItem('Услуги')" class="btn btn-link {% if request.GET.type_procurement_item == 'Услуги' %}active{% endif %} w-100">Услуги</button>
+                        <button type="button" onclick="setTypeProcurementItem('Услуги')"
+                                class="btn btn-link {% if request.GET.type_procurement_item == 'Услуги' %}active{% endif %} w-100">
+                            Услуги
+                        </button>
                     </li>
                 </ul>
                 <div class="row mb-3 pt-4 pb-4 bg-dark-subtle row-gap-3 ms-0 me-0">
@@ -62,21 +72,21 @@
                             </div>
                         </div>
                     </div>
-                {% if request.GET.type_procurement_item == 'Товар' or not request.GET.type_procurement_item %}
-                    <div class="col-3">
-                        <label>Поиск по дате поступления</label>
-                        <div class="row">
-                            <div class="col">
-                                <input type="date" name="date_receipt__gte" class="form-control" placeholder="От"
-                                       value="{{ request.GET.date_receipt__gte }}">
-                            </div>
-                            <div class="col">
-                                <input type="date" name="date_receipt__lte" class="form-control" placeholder="До"
-                                       value="{{ request.GET.date_receipt__lte }}" max="{{ today|date:'Y-m-d' }}">
+                    {% if request.GET.type_procurement_item == 'Товар' or not request.GET.type_procurement_item %}
+                        <div class="col-3">
+                            <label>Поиск по дате поступления</label>
+                            <div class="row">
+                                <div class="col">
+                                    <input type="date" name="date_receipt__gte" class="form-control" placeholder="От"
+                                           value="{{ request.GET.date_receipt__gte }}">
+                                </div>
+                                <div class="col">
+                                    <input type="date" name="date_receipt__lte" class="form-control" placeholder="До"
+                                           value="{{ request.GET.date_receipt__lte }}" max="{{ today|date:'Y-m-d' }}">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {% endif %}
+                    {% endif %}
                     <div class="col-3">
                         <label>Поиск по крайнему сроку поставки</label>
                         <div class="row">
@@ -161,20 +171,20 @@
                                placeholder="Поиск по статусу договора"
                                value="{{ request.GET.contract_status__icontains }}">
                     </div>
-                {% if request.GET.type_procurement_item == 'Товар' or not request.GET.type_procurement_item %}
-                    <div class="col-3">
-                        <label>Поиск по складу поступления </label>
-                        <input type="text" name="receipt_warehouse__icontains" class="form-control"
-                               placeholder="Поиск по складу поступления "
-                               value="{{ request.GET.receipt_warehouse__icontains }}">
-                    </div>
-                    <div class="col-3">
-                        <label>Поиск по ответственным склада</label>
-                        <input type="text" name="responsible_warehouse__icontains" class="form-control"
-                               placeholder="Поиск по ответственным склада"
-                               value="{{ request.GET.responsible_warehouse__icontains }}">
-                    </div>
-                {% endif %}
+                    {% if request.GET.type_procurement_item == 'Товар' or not request.GET.type_procurement_item %}
+                        <div class="col-3">
+                            <label>Поиск по складу поступления </label>
+                            <input type="text" name="receipt_warehouse__icontains" class="form-control"
+                                   placeholder="Поиск по складу поступления "
+                                   value="{{ request.GET.receipt_warehouse__icontains }}">
+                        </div>
+                        <div class="col-3">
+                            <label>Поиск по ответственным склада</label>
+                            <input type="text" name="responsible_warehouse__icontains" class="form-control"
+                                   placeholder="Поиск по ответственным склада"
+                                   value="{{ request.GET.responsible_warehouse__icontains }}">
+                        </div>
+                    {% endif %}
                     <div class="w-100 mt-2">
                         <button type="submit" class="btn btn-primary me-3">Поиск</button>
                         <a href="{% url 'contract_status:contract_status' %}#nofilter"
@@ -201,13 +211,17 @@
                         <th>Дата регистрации</th>
                         <th>Сумма по договору</th>
                         <th>Крайний срок поставки</th>
-                        <th>Дата поступления</th>
+                        {% if request.GET.type_procurement_item == 'Товар' or not request.GET.type_procurement_item %}
+                            <th>Дата поступления</th>
+                        {% endif %}
                         <th>Признак оплаты</th>
-                        <th> Курирующая служба</th>
+                        <th>Курирующая служба</th>
                         <th>Ответственный по договору</th>
                         <th>Статус договора</th>
-                        <th>Склад поступления</th>
-                        <th>Ответственный склада</th>
+                        {% if request.GET.type_procurement_item == 'Товар' or not request.GET.type_procurement_item %}
+                            <th>Склад поступления</th>
+                            <th>Ответственный склада</th>
+                        {% endif %}
                     </tr>
                     </thead>
                     <tbody>
@@ -219,13 +233,17 @@
                             <td class="td_date_receipt">{{ main_sklad.registration_date|date:"d.m.Y" }}</td>
                             <td class="td_quantity">{{ main_sklad.contract_sum|default_if_none:""|intcomma }}</td>
                             <td class="td_date_receipt">{{ main_sklad.delivery_deadline|date:"d.m.Y" }}</td>
-                            <td class="td_date_receipt">{{ main_sklad.date_receipt|date:"d.m.Y" }}</td>
+                            {% if request.GET.type_procurement_item == 'Товар' or not request.GET.type_procurement_item %}
+                                <td class="td_date_receipt">{{ main_sklad.date_receipt|date:"d.m.Y" }}</td>
+                            {% endif %}
                             <td class="td_price">{{ main_sklad.payment_indicator }}</td>
                             <td class="td_sum">{{ main_sklad.supervising_service }}</td>
                             <td class="td_number_sklad">{{ main_sklad.responsible }}</td>
                             <td class="td_responsible">{{ main_sklad.contract_status }}</td>
-                            <td class="td_contractor">{{ main_sklad.receipt_warehouse }}</td>
-                            <td class="td_agreement">{{ main_sklad.responsible_warehouse }}</td>
+                            {% if request.GET.type_procurement_item == 'Товар' or not request.GET.type_procurement_item %}
+                                <td class="td_contractor">{{ main_sklad.receipt_warehouse }}</td>
+                                <td class="td_agreement">{{ main_sklad.responsible_warehouse }}</td>
+                            {% endif %}
 
                         </tr>
                     {% endfor %}
@@ -247,6 +265,8 @@
                             <li class="page-item"><a class="page-link"
                                                      href="?page=
 
+
+
                                                              {{ main_sklads.previous_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8249;</a>
                             </li>
                         {% endif %}
@@ -257,6 +277,8 @@
                             <li class="page-item {% if page_num == main_sklads.number %}active{% endif %}">
                                 <a class="page-link" href="?page=
 
+
+
                                         {{ page_num }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">{{ page_num }}</a>
                             </li>
                         {% endif %}
@@ -265,10 +287,14 @@
                     {% if main_sklads.has_next %}
                         <li class="page-item"><a class="page-link" href="?page=
 
+
+
                                 {{ main_sklads.next_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8250;</a>
                         </li>
                         <li class="page-item"><a class="page-link"
                                                  href="?page=
+
+
 
                                                          {{ main_sklads.paginator.num_pages }}{% if search_querydict %}&{{ search_querydict }}{% endif %}"><span
                                 aria-hidden="true">&raquo;</span>
