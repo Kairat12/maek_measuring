@@ -32,6 +32,7 @@ def contract_status(request):
         'contract_status__icontains': request.GET.get('contract_status__icontains'),
         'receipt_warehouse__icontains': request.GET.get('receipt_warehouse__icontains'),
         'responsible_warehouse__icontains': request.GET.get('responsible_warehouse__icontains'),
+        'type_procurement_item': request.GET.get('type_procurement_item'),
     }
     search_querydict = QueryDict(mutable=True)
     for key, value in search_params.items():
