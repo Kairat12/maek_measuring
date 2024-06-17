@@ -16,6 +16,8 @@ class ContractStatus(models.Model):
     contract_status = models.CharField(max_length=60, verbose_name='Статус договора', null=True, blank=True)
     receipt_warehouse = models.CharField(max_length=100, verbose_name='Склад поступления', null=True, blank=True)
     responsible_warehouse = models.CharField(max_length=200, verbose_name='Ответственный склада', null=True, blank=True)
+    type_procurement_item = models.CharField(max_length=50, verbose_name='Вид предмета', null=True, blank=True)
+
 
     def __str__(self):
         return f"{self.short_description} - {self.contractor} - {self.contract_name} - {self.registration_date}"
