@@ -3,6 +3,7 @@ from django.db import models
 from django.dispatch import receiver
 from django_auth_ldap.backend import populate_user, LDAPBackend
 
+
 # Create your models here.
 class Profile(models.Model):
     user = models.OneToOneField(User, null=True, related_name='profile', on_delete=models.PROTECT)
@@ -101,8 +102,11 @@ def ldap_auth_handler(user, ldap_user, **kwargs):
                           'mbalhozhaev', 'aakkaisiyeva', 'ashangitbaev',
                           'asmolenskiy', 'sutebaev',
                           'eibragimov', 'amakarenko', 'rvyshegorodskiy',
-                          'efilippov', 'marutyunyan'
+                          'efilippov', 'marutyunyan',
 
+                          "zhbabasova", "tbalabekova",
+                          "eibragimov", "vvasilev", "iagafonov", "nmaksimova", "aaibergenova", "zhmustapaeva",
+                          "aahmedov"
                           ]
             new_profile.user.is_active = True if new_profile.user.username in boss_users else False
             new_profile.save()
