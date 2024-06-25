@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load humanize %}
 {% load static %}
-{% block title %}Состояние договоров{% endblock %}
 {% block content %}
 
     <div class="contractor_content mb-5">
@@ -155,19 +154,6 @@
                         </select>
                     </div>
                     <div class="col-3">
-                        <label>Поиск по дате оплаты</label>
-                        <div class="row">
-                            <div class="col">
-                                <input type="date" name="date_payment__gte" class="form-control" placeholder="От"
-                                       value="{{ request.GET.date_payment__gte }}">
-                            </div>
-                            <div class="col">
-                                <input type="date" name="date_payment__lte" class="form-control" placeholder="До"
-                                       value="{{ request.GET.date_payment__lte }}" max="{{ today|date:'Y-m-d' }}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-3">
                         <label>Поиск по курирующим службам</label>
                         <input type="text" name="supervising_service__icontains" class="form-control"
                                placeholder="Поиск по курирующим службам"
@@ -229,7 +215,6 @@
                             <th>Дата поступления</th>
                         {% endif %}
                         <th>Признак оплаты</th>
-                        <th>Дата оплаты</th>
                         <th>Курирующая служба</th>
                         <th>Ответственный по договору</th>
                         <th>Статус договора</th>
@@ -252,7 +237,6 @@
                                 <td class="td_date_receipt">{{ main_sklad.date_receipt|date:"d.m.Y" }}</td>
                             {% endif %}
                             <td class="td_price">{{ main_sklad.payment_indicator }}</td>
-                            <td class="td_price">{{ main_sklad.date_payment|date:"d.m.Y" }}</td>
                             <td class="td_sum">{{ main_sklad.supervising_service }}</td>
                             <td class="td_number_sklad">{{ main_sklad.responsible }}</td>
                             <td class="td_responsible">{{ main_sklad.contract_status }}</td>
