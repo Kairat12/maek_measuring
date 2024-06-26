@@ -14,6 +14,10 @@ from pathlib import Path
 from django_auth_ldap.config import LDAPSearch
 import ldap
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates/')
@@ -31,8 +35,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 LOGIN_URL = 'profiles:login'
-LOGIN_REDIRECT_URL = 'sklad:index'
-LOGOUT_REDIRECT_URL = 'sklad:index'
+LOGIN_REDIRECT_URL = 'devices:index'
+LOGOUT_REDIRECT_URL = 'devices:index'
 
 AUTH_USER_MODEL = 'auth.User'
 
@@ -46,7 +50,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'widget_tweaks',
     'profiles',
+    'devices'
 ]
 
 MIDDLEWARE = [
@@ -106,9 +112,9 @@ AUTHENTICATION_BACKENDS = [
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "maek_sklad",
-        "USER": "postgres",
-        "PASSWORD": "admin",
+        "NAME": "maek_measuring",
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
         "HOST": "127.0.0.1",
         "PORT": "5432",
     }

@@ -5,81 +5,107 @@
 
     <div class="contractor_content mb-5">
         <div class="container">
-            <h3 class="h3 mt-2 mb-3">Товары на складе по состоянию на {{ today|date:"d.m.Y" }}</h3>
-            <form method="GET" action="{% url 'sklad:main_sklad' %}" class="w-100">
+            <h3 class="h3 mt-2 mb-3">Приборы по состоянию на {{ today|date:"d.m.Y" }}</h3>
+            <form method="GET" action="{% url 'devices:devices_page' %}" class="w-100">
                 <div class="row mb-3 pt-4 pb-4 bg-dark-subtle row-gap-3 ms-0 me-0">
-                    <div class="col-3">
-                        <label>Поиск по номенклатуре</label>
-                        <input type="text" name="item_number__icontains" class="form-control"
-                               placeholder="Поиск по номенклатуре" value="{{ request.GET.item_number__icontains }}">
-                    </div>
                     <div class="col-3">
                         <label>Поиск по наименованию</label>
                         <input type="text" name="name__icontains" class="form-control"
                                placeholder="Поиск по наименованию" value="{{ request.GET.name__icontains }}">
                     </div>
                     <div class="col-3">
-                        <label>Поиск по складу</label>
-                        <input type="text" name="number_sklad__icontains" class="form-control"
-                               placeholder="Поиск по складу" value="{{ request.GET.number_sklad__icontains }}">
-                    </div>
-                    <div class="col-3">
                         <label>Поиск по подразделению</label>
-                        <input type="text" name="responsible__icontains" class="form-control"
-                               placeholder="Поиск по подразделению" value="{{ request.GET.responsible__icontains }}">
+                        <input type="text" name="subdivision__icontains" class="form-control"
+                               placeholder="Поиск по подразделению" value="{{ request.GET.subdivision__icontains }}">
                     </div>
                     <div class="col-3">
-                        <label>Поиск по цене</label>
+                        <label>Поиск по заводскому номеру</label>
+                        <input type="text" name="factory_number__icontains" class="form-control"
+                               placeholder="Поиск по заводскому номеру" value="{{ request.GET.factory_number__icontains }}">
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по датчикам</label>
+                        <input type="text" name="sensor__icontains" class="form-control"
+                               placeholder="Поиск по датчикам" value="{{ request.GET.sensor__icontains }}">
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по количеству</label>
                         <div class="row">
                             <div class="col">
-                                <input type="number" name="price__gte" class="form-control" placeholder="От"
-                                       value="{{ request.GET.price__gte }}">
+                                <input type="number" name="quantity__gte" class="form-control" placeholder="От"
+                                       value="{{ request.GET.quantity__gte }}">
                             </div>
                             <div class="col">
-                                <input type="number" name="price__lte" class="form-control" placeholder="До"
-                                       value="{{ request.GET.price__lte }}">
+                                <input type="number" name="quantity__lte" class="form-control" placeholder="До"
+                                       value="{{ request.GET.quantity__lte }}">
                             </div>
                         </div>
                     </div>
                     <div class="col-3">
-                        <label>Поиск по сумме</label>
+                        <label>Поиск по дате выпуска</label>
                         <div class="row">
                             <div class="col">
-                                <input type="number" name="sum__gte" class="form-control" placeholder="От"
-                                       value="{{ request.GET.sum__gte }}">
+                                <input type="date" name="date_issued__gte" class="form-control" placeholder="От"
+                                       value="{{ request.GET.date_issued__gte }}">
                             </div>
                             <div class="col">
-                                <input type="number" name="sum__lte" class="form-control" placeholder="До"
-                                       value="{{ request.GET.sum__lte }}">
+                                <input type="date" name="date_issued__lte" class="form-control" placeholder="До"
+                                       value="{{ request.GET.date_issued__lte }}" max="{{ today|date:'Y-m-d' }}">
                             </div>
                         </div>
                     </div>
                     <div class="col-3">
-                        <label>Поиск по дате поступления</label>
+                        <label>Поиск по дате ввода</label>
                         <div class="row">
                             <div class="col">
-                                <input type="date" name="date_receipt__gte" class="form-control" placeholder="От"
-                                       value="{{ request.GET.date_receipt__gte }}">
+                                <input type="date" name="date_entry__gte" class="form-control" placeholder="От"
+                                       value="{{ request.GET.date_entry__gte }}">
                             </div>
                             <div class="col">
-                                <input type="date" name="date_receipt__lte" class="form-control" placeholder="До"
-                                       value="{{ request.GET.date_receipt__lte }}" max="{{ today|date:'Y-m-d' }}">
+                                <input type="date" name="date_entry__lte" class="form-control" placeholder="До"
+                                       value="{{ request.GET.date_entry__lte }}" max="{{ today|date:'Y-m-d' }}">
                             </div>
                         </div>
                     </div>
                     <div class="col-3">
-                        <label>Поиск по контрагентам</label>
-                        <input type="text" name="contractor__icontains" class="form-control"
-                               placeholder="Поиск по контрагентам" value="{{ request.GET.contractor__icontains }}">
+                        <label>Поиск по дате поверки</label>
+                        <div class="row">
+                            <div class="col">
+                                <input type="date" name="date_verification__gte" class="form-control" placeholder="От"
+                                       value="{{ request.GET.date_verification__gte }}">
+                            </div>
+                            <div class="col">
+                                <input type="date" name="date_verification__lte" class="form-control" placeholder="До"
+                                       value="{{ request.GET.date_verification__lte }}" max="{{ today|date:'Y-m-d' }}">
+                            </div>
+                        </div>
                     </div>
                     <div class="col-3">
-                        <label>Поиск по договорам</label>
-                        <input type="text" name="agreement__icontains" class="form-control"
-                               placeholder="Поиск по договорам" value="{{ request.GET.agreement__icontains }}">
+                        <label>Поиск по результату ремонта</label>
+                        <input type="text" name="repair_result__icontains" class="form-control"
+                               placeholder="Поиск по результату ремонта" value="{{ request.GET.repair_result__icontains }}">
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по дате следующей поверки</label>
+                        <div class="row">
+                            <div class="col">
+                                <input type="date" name="date_next_verification__gte" class="form-control" placeholder="От"
+                                       value="{{ request.GET.date_next_verification__gte }}">
+                            </div>
+                            <div class="col">
+                                <input type="date" name="date_next_verification__lte" class="form-control" placeholder="До"
+                                       value="{{ request.GET.date_next_verification__lte }}" max="{{ today|date:'Y-m-d' }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <label>Поиск по состоянию</label>
+                        <input type="text" name="state__icontains" class="form-control"
+                               placeholder="Поиск по состоянию" value="{{ request.GET.state__icontains }}">
                     </div>
                     <div class="w-100 mt-2">
                         <button type="submit" class="btn btn-primary me-3">Поиск</button>
-                        <a href="{% url 'sklad:main_sklad' %}#nofilter" class="btn btn-primary text-white">Сбросить</a>
+                        <a href="{% url 'devices:devices_page' %}#nofilter" class="btn btn-primary text-white">Сбросить</a>
                         <button type="button" id="downloadReportButton" class="btn btn-success text-white ms-3">Скачать
                             отчет
                         </button>
@@ -88,42 +114,41 @@
             </form>
 
 
-            {% if main_sklads %}
+            {% if devices %}
                 <div class="h5">
-                    <p>Количество записей: <b>{{ main_sklads_count }}</b></p>
-                    <p>Общая сумма: <b>{{ main_sklads_sum.sum|intcomma }} тг</b></p>
+                    <p>Количество записей: <b>{{ devices_count }}</b></p>
                 </div>
                 <table class="table-bordered" id="productsTable">
                     <thead>
                     <tr>
-                        <th>Номенклатурный номер</th>
                         <th>Наименование</th>
-                        <th>Единица измерения</th>
+                        <th>Подразделение</th>
+                        <th>Заводской Номер</th>
+                        <th>Датчик</th>
                         <th>Количество</th>
-                        <th>Цена</th>
-                        <th>Сумма</th>
-                        <th>Дата поступления</th>
-                        <th> № склада</th>
-                        <th>Ответственный</th>
-                        <th>Контрагент</th>
-                        <th>Договор</th>
+                        <th>Дата Выпуска</th>
+                        <th>Дата Ввода</th>
+                        <th>Дата Поверки</th>
+                        <th>Результат Ремонта</th>
+                        <th>Дата Следующей Поверки</th>
+                        <th>Состояние</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {% for main_sklad in main_sklads %}
+                    {% for device in devices %}
                         <tr>
-                            <td class="td_item_number">{{ main_sklad.item_number }}</td>
-                            <td class="td_name" style="max-width: 200px">{{ main_sklad.name }}</td>
-                            <td class="td_unit">{{ main_sklad.unit }}</td>
-                            <td class="td_quantity">{{ main_sklad.quantity|default_if_none:""|intcomma }}</td>
-                            <td class="td_price">{{ main_sklad.price|default_if_none:""|intcomma }}</td>
-                            <td class="td_sum">{{ main_sklad.sum|default_if_none:""|intcomma }}</td>
-                            <td class="td_date_receipt">{{ main_sklad.date_receipt|date:"d.m.Y" }}</td>
-                            <td class="td_number_sklad">{{ main_sklad.number_sklad }}</td>
-                            <td class="td_responsible">{{ main_sklad.responsible }}</td>
-                            <td class="td_contractor">{{ main_sklad.contractor|default_if_none:"" }}</td>
-                            <td class="td_agreement">{{ main_sklad.agreement|default_if_none:"" }}</td>
-
+                            <td class="td_name" style="max-width: 200px">{{ device.name }}</td>
+                            <td class="td_unit">{{ device.subdivision }}</td>
+                            <td class="td_quantity">{{ device.factory_number }}</td>
+                            <td class="td_price">{{ device.sensor }}</td>
+                            <td class="td_sum">{{ device.quantity }}</td>
+                            <td class="td_date_receipt">{{ device.date_issued|date:"d.m.Y" }}</td>
+                            <td class="td_date_receipt">{{ device.date_entry|date:"d.m.Y" }}</td>
+                            <td class="td_date_receipt">{{ device.date_verification|date:"d.m.Y" }}</td>
+                            <td class="td_number_sklad">{{ device.repair_result }}</td>
+                            <td class="td_responsible">{{ device.responsible }}</td>
+                            <td class="td_date_receipt">{{ device.date_next_verification|date:"d.m.Y" }}</td>
+                            <td class="td_contractor">{{ device.state|default_if_none:"" }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -136,30 +161,30 @@
             <nav aria-label="Page navigation example">
                 <ul class="pagination mt-4">
                     <li class="step-links">
-                        {% if main_sklads.has_previous %}
+                        {% if devices.has_previous %}
                             <li class="page-item"><a class="page-link"
                                                      href="?page=1{% if search_querydict %}&{{ search_querydict }}{% endif %}"
                                                      aria-label="Previous"><span
                                     aria-hidden="true">&laquo;</span></a></li>
                             <li class="page-item"><a class="page-link"
-                                                     href="?page={{ main_sklads.previous_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8249;</a>
+                                                     href="?page={{ devices.previous_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8249;</a>
                             </li>
                         {% endif %}
                     </li>
 
-                    {% for page_num in main_sklads.paginator.page_range %}
-                        {% if page_num >= main_sklads.number|add:"-2" and page_num <= main_sklads.number|add:"2" %}
-                            <li class="page-item {% if page_num == main_sklads.number %}active{% endif %}">
+                    {% for page_num in devices.paginator.page_range %}
+                        {% if page_num >= devices.number|add:"-2" and page_num <= devices.number|add:"2" %}
+                            <li class="page-item {% if page_num == devices.number %}active{% endif %}">
                                 <a class="page-link" href="?page={{ page_num }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">{{ page_num }}</a>
                             </li>
                         {% endif %}
                     {% endfor %}
 
-                    {% if main_sklads.has_next %}
-                        <li class="page-item"><a class="page-link" href="?page={{ main_sklads.next_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8250;</a>
+                    {% if devices.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ devices.next_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8250;</a>
                         </li>
                         <li class="page-item"><a class="page-link"
-                                                 href="?page={{ main_sklads.paginator.num_pages }}{% if search_querydict %}&{{ search_querydict }}{% endif %}"><span
+                                                 href="?page={{ devices.paginator.num_pages }}{% if search_querydict %}&{{ search_querydict }}{% endif %}"><span
                                 aria-hidden="true">&raquo;</span>
                         </a></li>
                     {% endif %}
@@ -168,48 +193,48 @@
         </div>
     </div>
     <script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
-    <script>
-        document.getElementById('downloadReportButton').addEventListener('click', function () {
-            // Collect form data
-            const formData = new FormData(document.querySelector('form'));
-            const searchParams = new URLSearchParams();
-
-            for (const [key, value] of formData.entries()) {
-                if (value) {
-                    searchParams.append(key, value);
-                }
-            }
-
-            // URL of the endpoint
-            const url = `{% url 'sklad:main_sklad_report' %}?${searchParams.toString()}`;
-
-            // Sending the request using fetch
-            fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => response.blob())
-                .then(blob => {
-                    // Create a link element to trigger the download
-                    const date = new Date();
-                    const year = date.getFullYear();
-                    const month = String(date.getMonth() + 1).padStart(2, '0');
-                    const day = String(date.getDate()).padStart(2, '0');
-                    const currentDate = `${year}-${month}-${day}`;
-
-                    // Create a link element to trigger the download
-                    const link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(blob);
-                    link.download = `report_sklad_${currentDate}.xlsx`; // Filename with current date
-                    link.click();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        });
-    </script>
+{#    <script>#}
+{#        document.getElementById('downloadReportButton').addEventListener('click', function () {#}
+{#            // Collect form data#}
+{#            const formData = new FormData(document.querySelector('form'));#}
+{#            const searchParams = new URLSearchParams();#}
+{##}
+{#            for (const [key, value] of formData.entries()) {#}
+{#                if (value) {#}
+{#                    searchParams.append(key, value);#}
+{#                }#}
+{#            }#}
+{##}
+{#            // URL of the endpoint#}
+{#            const url = `{% url 'sklad:device_report' %}?${searchParams.toString()}`;#}
+{##}
+{#            // Sending the request using fetch#}
+{#            fetch(url, {#}
+{#                method: 'GET',#}
+{#                headers: {#}
+{#                    'Content-Type': 'application/json'#}
+{#                }#}
+{#            })#}
+{#                .then(response => response.blob())#}
+{#                .then(blob => {#}
+{#                    // Create a link element to trigger the download#}
+{#                    const date = new Date();#}
+{#                    const year = date.getFullYear();#}
+{#                    const month = String(date.getMonth() + 1).padStart(2, '0');#}
+{#                    const day = String(date.getDate()).padStart(2, '0');#}
+{#                    const currentDate = `${year}-${month}-${day}`;#}
+{##}
+{#                    // Create a link element to trigger the download#}
+{#                    const link = document.createElement('a');#}
+{#                    link.href = window.URL.createObjectURL(blob);#}
+{#                    link.download = `report_device_${currentDate}.xlsx`; // Filename with current date#}
+{#                    link.click();#}
+{#                })#}
+{#                .catch(error => {#}
+{#                    console.error('Error:', error);#}
+{#                });#}
+{#        });#}
+{#    </script>#}
 
 
 {% endblock %}
