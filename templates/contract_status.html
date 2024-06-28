@@ -154,6 +154,19 @@
                         </select>
                     </div>
                     <div class="col-3">
+                        <label>Поиск по дате оплаты</label>
+                        <div class="row">
+                            <div class="col">
+                                <input type="date" name="date_payment__gte" class="form-control" placeholder="От"
+                                       value="{{ request.GET.date_payment__gte }}">
+                            </div>
+                            <div class="col">
+                                <input type="date" name="date_payment__lte" class="form-control" placeholder="До"
+                                       value="{{ request.GET.date_payment__lte }}" max="{{ today|date:'Y-m-d' }}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-3">
                         <label>Поиск по курирующим службам</label>
                         <input type="text" name="supervising_service__icontains" class="form-control"
                                placeholder="Поиск по курирующим службам"
