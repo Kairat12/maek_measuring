@@ -3,7 +3,7 @@ from django.db import models
 
 # Create your models here.
 class ContractStatus(models.Model):
-    short_description = models.CharField(max_length=350, verbose_name='Краткое содержание', null=True, blank=True)
+    short_description = models.CharField(max_length=650, verbose_name='Краткое содержание', null=True, blank=True)
     contractor = models.CharField(max_length=350, verbose_name='Контрагент')
     contract_name = models.CharField(max_length=350, verbose_name='Договор')
     registration_date = models.DateField(verbose_name='Дата регистрации')
