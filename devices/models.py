@@ -10,7 +10,7 @@ class Device(models.Model):
     quantity = models.IntegerField(verbose_name="количество", null=True, blank=True)
     date_issued = models.DateField(verbose_name="Дата Выпуска", null=True, blank=True)
     date_entry = models.DateField(verbose_name="Дата Ввода", null=True, blank=True)
-    date_verification = models.DateField(verbose_name="Дата Поверки")
+    date_verification = models.DateField(verbose_name="Дата Поверки", null=True, blank=True)
     repair_result = models.CharField(max_length=200, verbose_name="Результат Ремонта", null=True, blank=True)
     date_next_verification = models.DateField(verbose_name="Дата Следующей Поверки", null=True, blank=True)
     state = models.CharField(max_length=100, verbose_name="Состояние", null=True, blank=True)
