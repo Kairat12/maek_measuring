@@ -146,7 +146,6 @@
                             <td class="td_date_receipt">{{ device.date_entry|date:"d.m.Y" }}</td>
                             <td class="td_date_receipt">{{ device.date_verification|date:"d.m.Y" }}</td>
                             <td class="td_number_sklad">{{ device.repair_result }}</td>
-                            <td class="td_responsible">{{ device.responsible }}</td>
                             <td class="td_date_receipt">{{ device.date_next_verification|date:"d.m.Y" }}</td>
                             <td class="td_contractor">{{ device.state|default_if_none:"" }}</td>
                         </tr>
