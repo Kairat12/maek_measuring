@@ -228,6 +228,7 @@
                             <th>Дата поступления</th>
                         {% endif %}
                         <th>Признак оплаты</th>
+                        <th>Дата оплаты</th>
                         <th>Курирующая служба</th>
                         <th>Ответственный по договору</th>
                         <th>Статус договора</th>
@@ -250,6 +251,7 @@
                                 <td class="td_date_receipt">{{ main_sklad.date_receipt|date:"d.m.Y" }}</td>
                             {% endif %}
                             <td class="td_price">{{ main_sklad.payment_indicator }}</td>
+                            <td class="td_price">{{ main_sklad.date_payment }}</td>
                             <td class="td_sum">{{ main_sklad.supervising_service }}</td>
                             <td class="td_number_sklad">{{ main_sklad.responsible }}</td>
                             <td class="td_responsible">{{ main_sklad.contract_status }}</td>
