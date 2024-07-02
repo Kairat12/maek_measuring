@@ -21,7 +21,8 @@
                     <div class="col-3">
                         <label>Поиск по заводскому номеру</label>
                         <input type="text" name="factory_number__icontains" class="form-control"
-                               placeholder="Поиск по заводскому номеру" value="{{ request.GET.factory_number__icontains }}">
+                               placeholder="Поиск по заводскому номеру"
+                               value="{{ request.GET.factory_number__icontains }}">
                     </div>
                     <div class="col-3">
                         <label>Поиск по датчикам</label>
@@ -83,18 +84,22 @@
                     <div class="col-3">
                         <label>Поиск по результату ремонта</label>
                         <input type="text" name="repair_result__icontains" class="form-control"
-                               placeholder="Поиск по результату ремонта" value="{{ request.GET.repair_result__icontains }}">
+                               placeholder="Поиск по результату ремонта"
+                               value="{{ request.GET.repair_result__icontains }}">
                     </div>
                     <div class="col-3">
                         <label>Поиск по дате следующей поверки</label>
                         <div class="row">
                             <div class="col">
-                                <input type="date" name="date_next_verification__gte" class="form-control" placeholder="От"
+                                <input type="date" name="date_next_verification__gte" class="form-control"
+                                       placeholder="От"
                                        value="{{ request.GET.date_next_verification__gte }}">
                             </div>
                             <div class="col">
-                                <input type="date" name="date_next_verification__lte" class="form-control" placeholder="До"
-                                       value="{{ request.GET.date_next_verification__lte }}" max="{{ today|date:'Y-m-d' }}">
+                                <input type="date" name="date_next_verification__lte" class="form-control"
+                                       placeholder="До"
+                                       value="{{ request.GET.date_next_verification__lte }}"
+                                       max="{{ today|date:'Y-m-d' }}">
                             </div>
                         </div>
                     </div>
@@ -105,10 +110,11 @@
                     </div>
                     <div class="w-100 mt-2">
                         <button type="submit" class="btn btn-primary me-3">Поиск</button>
-                        <a href="{% url 'devices:devices_page' %}#nofilter" class="btn btn-primary text-white">Сбросить</a>
-{#                        <button type="button" id="downloadReportButton" class="btn btn-success text-white ms-3">Скачать#}
-{#                            отчет#}
-{#                        </button>#}
+                        <a href="{% url 'devices:devices_page' %}#nofilter"
+                           class="btn btn-primary text-white">Сбросить</a>
+                        {#                        <button type="button" id="downloadReportButton" class="btn btn-success text-white ms-3">Скачать#}
+                        {#                            отчет#}
+                        {#                        </button>#}
                     </div>
                 </div>
             </form>
@@ -167,7 +173,8 @@
                                                      aria-label="Previous"><span
                                     aria-hidden="true">&laquo;</span></a></li>
                             <li class="page-item"><a class="page-link"
-                                                     href="?page={{ devices.previous_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8249;</a>
+                                                     href="?page=
+                                                             {{ devices.previous_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8249;</a>
                             </li>
                         {% endif %}
                     </li>
@@ -175,16 +182,19 @@
                     {% for page_num in devices.paginator.page_range %}
                         {% if page_num >= devices.number|add:"-2" and page_num <= devices.number|add:"2" %}
                             <li class="page-item {% if page_num == devices.number %}active{% endif %}">
-                                <a class="page-link" href="?page={{ page_num }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">{{ page_num }}</a>
+                                <a class="page-link" href="?page=
+                                        {{ page_num }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">{{ page_num }}</a>
                             </li>
                         {% endif %}
                     {% endfor %}
 
                     {% if devices.has_next %}
-                        <li class="page-item"><a class="page-link" href="?page={{ devices.next_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8250;</a>
+                        <li class="page-item"><a class="page-link" href="?page=
+                                {{ devices.next_page_number }}{% if search_querydict %}&{{ search_querydict }}{% endif %}">&#8250;</a>
                         </li>
                         <li class="page-item"><a class="page-link"
-                                                 href="?page={{ devices.paginator.num_pages }}{% if search_querydict %}&{{ search_querydict }}{% endif %}"><span
+                                                 href="?page=
+                                                         {{ devices.paginator.num_pages }}{% if search_querydict %}&{{ search_querydict }}{% endif %}"><span
                                 aria-hidden="true">&raquo;</span>
                         </a></li>
                     {% endif %}
@@ -194,24 +204,25 @@
     </div>
     <script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
 
-
-<script>
-    let productsTable = document.getElementById('productsTable');
-    if (productsTable){
-        let deviceTr = document.querySelectorAll('.device_tr');
-        deviceTr.forEach(tr => {
+    <script>
+        let productsTable = document.getElementById('productsTable');
+        if (productsTable) {
+            let deviceTr = productsTable.querySelectorAll('.device_tr');
+            deviceTr.forEach(tr => {
                 let repairResult = tr.querySelector('.td_repair_result');
                 let dateNextVer = tr.querySelector('.td_date_next_verification');
                 let state = tr.querySelector('.td_state');
                 let dateValue = new Date(dateNextVer.textContent.trim());
                 let todayDate = new Date();
+                console.log("dateValue", dateValue);
+                console.log("todayDate", todayDate);
                 if (repairResult && (repairResult.textContent.trim() === "Годен" || repairResult.textContent.trim() === "") && (dateValue <= todayDate) && state.textContent.trim() === "В подразделении") {
                     repairResult.classList.add('bg-warning');
                 }
             });
-    }
+        }
 
-</script>
+    </script>
 
 
 {% endblock %}
