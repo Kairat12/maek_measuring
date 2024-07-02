@@ -125,7 +125,7 @@
                     <p>Количество записей: <b>{{ devices_count }}</b></p>
                     <p>Количество приборов: <b>{{ devices_quantity_count.quantity|intcomma }}</b></p>
                 </div>
-                <table class="table table-bordered border-dark" id="productsTable">
+                <table class="table table-bordered border-dark" id="products_table">
                     <thead>
                     <tr>
                         <th>Наименование</th>
@@ -205,7 +205,7 @@
     <script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
 
     <script>
-        let productsTable = document.getElementById('productsTable');
+        let productsTable = document.getElementById('products_table');
         if (productsTable) {
             let deviceTr = productsTable.querySelectorAll('.device_tr');
             deviceTr.forEach(tr => {
