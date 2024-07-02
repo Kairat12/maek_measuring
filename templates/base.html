@@ -19,14 +19,8 @@
     <!-- Custom styles for this template -->
     <link href="{% static 'journal/css/outwork_style.css' %}?v=1.11" rel="stylesheet" type="text/css">
     {#    <link rel="manifest" href="{% url 'manifest' %}?v=1.4">#}
-    <link rel="manifest" href="/static/manifest.json?v=1.4">
-    <script>
-        window.addEventListener('load', function () {
-            const version = '6';
-            const serviceWorkerUrl = '/static/journal/service-worker.js'; // Абсолютный путь к сервисному работнику
-            navigator.serviceWorker.register(serviceWorkerUrl + '?v=' + version);
-        });
-    </script>
+{#    <link rel="manifest" href="/static/manifest.json?v=1.4">#}
+
     {% block extra_css %}{% endblock extra_css %}
 </head>
 
