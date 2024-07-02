@@ -50,6 +50,7 @@ def devices_page(request):
                 devices = devices.filter(**{field: value})
 
     devices_count = len(devices)
+    devices_quantity_count = devices.aggregate(quantity=Sum('quantity'))
 
     items_per_page = 60
 
@@ -67,5 +68,6 @@ def devices_page(request):
     return render(request, 'main_sklad.html', {'devices': devices,
                                                'today': today,
                                                'devices_count': devices_count,
+                                               'devices_quantity_count': devices_quantity_count,
                                                'search_querydict': search_querydict.urlencode(),
                                                })
