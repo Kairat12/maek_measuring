@@ -399,9 +399,9 @@ footer.footer {
     background: #cacaca;
     padding: 20px 0;
 }
-.contractor_content table tbody tr:nth-child(even){
-    background: #EDEDED;
-}
+/*.contractor_content table tbody tr:nth-child(even){*/
+/*    background: #EDEDED;*/
+/*}*/
 
 
 .request_btn input{
