@@ -119,7 +119,7 @@
                     <p>Количество записей: <b>{{ devices_count }}</b></p>
                     <p>Количество приборов: <b>{{ devices_quantity_count.quantity|intcomma }}</b></p>
                 </div>
-                <table class="table-bordered border-dark" id="productsTable">
+                <table class="table table-bordered border-dark" id="productsTable">
                     <thead>
                     <tr>
                         <th>Наименование</th>
@@ -137,18 +137,18 @@
                     </thead>
                     <tbody>
                     {% for device in devices %}
-                        <tr>
+                        <tr class="device-tr">
                             <td class="td_name" style="max-width: 200px">{{ device.name }}</td>
-                            <td class="td_unit">{{ device.subdivision }}</td>
-                            <td class="td_quantity">{{ device.factory_number }}</td>
-                            <td class="td_price">{{ device.sensor }}</td>
-                            <td class="td_sum">{{ device.quantity }}</td>
-                            <td class="td_date_receipt">{{ device.date_issued|date:"d.m.Y" }}</td>
-                            <td class="td_date_receipt">{{ device.date_entry|date:"d.m.Y" }}</td>
-                            <td class="td_date_receipt">{{ device.date_verification|date:"d.m.Y" }}</td>
-                            <td class="td_number_sklad">{{ device.repair_result }}</td>
-                            <td class="td_date_receipt">{{ device.date_next_verification|date:"d.m.Y" }}</td>
-                            <td class="td_contractor">{{ device.state|default_if_none:"" }}</td>
+                            <td class="td_subdivision">{{ device.subdivision }}</td>
+                            <td class="td_factory_number">{{ device.factory_number }}</td>
+                            <td class="td_sensor">{{ device.sensor }}</td>
+                            <td class="td_quantity">{{ device.quantity }}</td>
+                            <td class="td_date_issued">{{ device.date_issued|date:"d.m.Y" }}</td>
+                            <td class="td_date_entry">{{ device.date_entry|date:"d.m.Y" }}</td>
+                            <td class="td_date_verification">{{ device.date_verification|date:"d.m.Y" }}</td>
+                            <td class="td_repair_result">{{ device.repair_result }}</td>
+                            <td class="td_date_next_verification">{{ device.date_next_verification|date:"d.m.Y" }}</td>
+                            <td class="td_state">{{ device.state|default_if_none:"" }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -193,48 +193,25 @@
         </div>
     </div>
     <script src="{% static 'journal/vendor/jquery/jquery-2.2.4.min.js' %}"></script>
-{#    <script>#}
-{#        document.getElementById('downloadReportButton').addEventListener('click', function () {#}
-{#            // Collect form data#}
-{#            const formData = new FormData(document.querySelector('form'));#}
-{#            const searchParams = new URLSearchParams();#}
-{##}
-{#            for (const [key, value] of formData.entries()) {#}
-{#                if (value) {#}
-{#                    searchParams.append(key, value);#}
-{#                }#}
-{#            }#}
-{##}
-{#            // URL of the endpoint#}
-{#            const url = `{% url 'sklad:device_report' %}?${searchParams.toString()}`;#}
-{##}
-{#            // Sending the request using fetch#}
-{#            fetch(url, {#}
-{#                method: 'GET',#}
-{#                headers: {#}
-{#                    'Content-Type': 'application/json'#}
-{#                }#}
-{#            })#}
-{#                .then(response => response.blob())#}
-{#                .then(blob => {#}
-{#                    // Create a link element to trigger the download#}
-{#                    const date = new Date();#}
-{#                    const year = date.getFullYear();#}
-{#                    const month = String(date.getMonth() + 1).padStart(2, '0');#}
-{#                    const day = String(date.getDate()).padStart(2, '0');#}
-{#                    const currentDate = `${year}-${month}-${day}`;#}
-{##}
-{#                    // Create a link element to trigger the download#}
-{#                    const link = document.createElement('a');#}
-{#                    link.href = window.URL.createObjectURL(blob);#}
-{#                    link.download = `report_device_${currentDate}.xlsx`; // Filename with current date#}
-{#                    link.click();#}
-{#                })#}
-{#                .catch(error => {#}
-{#                    console.error('Error:', error);#}
-{#                });#}
-{#        });#}
-{#    </script>#}
+
+
+<script>
+    let productsTable = document.getElementById('productsTable');
+    if (productsTable){
+        let deviceTr = document.querySelectorAll('.device_tr');
+        deviceTr.forEach(tr => {
+                let repairResult = tr.querySelector('.td_repair_result');
+                let dateNextVer = tr.querySelector('.td_date_next_verification');
+                let state = tr.querySelector('.td_state');
+                let dateValue = new Date(dateNextVer.textContent.trim());
+                let todayDate = new Date();
+                if (repairResult && (repairResult.textContent.trim() === "годен" || repairResult.textContent.trim() === "") && (dateValue <= todayDate) && state.textContent.trim() === "В подразделении") {
+                    repairResult.classList.add('bg-warning');
+                }
+            });
+    }
+
+</script>
 
 
 {% endblock %}
