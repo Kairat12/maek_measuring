@@ -143,7 +143,7 @@
                     </thead>
                     <tbody>
                     {% for device in devices %}
-                        <tr class="device-tr">
+                        <tr class="device_tr">
                             <td class="td_name" style="max-width: 200px">{{ device.name }}</td>
                             <td class="td_subdivision">{{ device.subdivision }}</td>
                             <td class="td_factory_number">{{ device.factory_number }}</td>
@@ -207,15 +207,14 @@
     <script>
         let productsTable = document.getElementById('products_table');
         if (productsTable) {
-            let deviceTr = productsTable.querySelectorAll('.device_tr');
+            let deviceTr = document.querySelectorAll('.device_tr');
             deviceTr.forEach(tr => {
                 let repairResult = tr.querySelector('.td_repair_result');
                 let dateNextVer = tr.querySelector('.td_date_next_verification');
                 let state = tr.querySelector('.td_state');
                 let dateValue = new Date(dateNextVer.textContent.trim());
                 let todayDate = new Date();
-                console.log("dateValue", dateValue);
-                console.log("todayDate", todayDate);
+
                 if (repairResult && (repairResult.textContent.trim() === "Годен" || repairResult.textContent.trim() === "") && (dateValue <= todayDate) && state.textContent.trim() === "В подразделении") {
                     repairResult.classList.add('bg-warning');
                 }
