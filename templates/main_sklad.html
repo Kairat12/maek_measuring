@@ -216,7 +216,7 @@
                 let todayDate = new Date();
 
                 if (repairResult && (repairResult.textContent.trim() === "Годен" || repairResult.textContent.trim() === "") && (dateValue <= todayDate) && state.textContent.trim() === "В подразделении") {
-                    repairResult.classList.add('bg-warning');
+                    tr.classList.add('bg-warning');
                 }
             });
         }
