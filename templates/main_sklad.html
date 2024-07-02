@@ -205,7 +205,7 @@
                 let state = tr.querySelector('.td_state');
                 let dateValue = new Date(dateNextVer.textContent.trim());
                 let todayDate = new Date();
-                if (repairResult && (repairResult.textContent.trim() === "годен" || repairResult.textContent.trim() === "") && (dateValue <= todayDate) && state.textContent.trim() === "В подразделении") {
+                if (repairResult && (repairResult.textContent.trim() === "Годен" || repairResult.textContent.trim() === "") && (dateValue <= todayDate) && state.textContent.trim() === "В подразделении") {
                     repairResult.classList.add('bg-warning');
                 }
             });
