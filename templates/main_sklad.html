@@ -214,7 +214,9 @@
                 let state = tr.querySelector('.td_state');
                 let dateValue = new Date(dateNextVer.textContent.trim());
                 let todayDate = new Date();
-
+                console.log("dateValue", dateValue);
+                console.log("todayDate", todayDate);
+                console.log("state.textContent", state.textContent);
                 if (repairResult && (repairResult.textContent.trim() === "Годен" || repairResult.textContent.trim() === "") && (dateValue <= todayDate) && (state.textContent.trim() === "В подразделении")) {
                     repairResult.classList.add('bg-warning');
                     tr.classList.add('bg-warning');
